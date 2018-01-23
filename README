@@ -1,0 +1,14 @@
+ESTRATEGIES IMPLEMENTADES
+
+* d'Equip:
+
+    * Tornar a casa (per quan fan gols i al principi)
+    * Defensa (si perden la possessió de la pilota, els jugadors tornen a les seves posicions defensives i actuen en conseqüència)
+    * Atac (els jugadors se'n van endavant quan aconsegueixen la posició de la pilota)
+
+* de Jugadors: 
+
+    * Si tenen la possessió de la pilota hi ha un jugador que va a la posició d'atac més bona (calculada d'un conjunt de punts)
+    * Si algú creu que està millor que el que té la pilota li demana que li passi la pilota   
+    * El  que té la pilota  si no pot passar o xutar, dribbla o condueix endavant
+    * Si un jugador és el més proper a la pilota la intenta aconseguir

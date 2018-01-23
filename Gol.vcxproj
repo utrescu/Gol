@@ -1,0 +1,173 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{E9A5A167-057A-4726-A848-52C2C38EF1D8}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>12.0.21005.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>Debug\</OutDir>
+    <IntDir>Debug\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>F:\xavier\projectes\0-Entreteniment\gol\SDL-1.2.15\include;$(IncludePath)</IncludePath>
+    <LibraryPath>F:\xavier\projectes\0-Entreteniment\gol\SDL-1.2.15\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>Release\</OutDir>
+    <IntDir>Release\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <OutputFile>$(OutDir)Gol_debug.exe</OutputFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>$(OutDir)Gol.pdb</ProgramDatabaseFile>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <OutputFile>$(OutDir)Gol.exe</OutputFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Animacio.cpp" />
+    <ClCompile Include="src\CalculadoraPuntsSuport.cpp" />
+    <ClCompile Include="src\Entitat.cpp" />
+    <ClCompile Include="src\Entitatmobil.cpp" />
+    <ClCompile Include="src\EntitatsGestor.cpp" />
+    <ClCompile Include="src\Equip.cpp" />
+    <ClCompile Include="src\EquipEstats.cpp" />
+    <ClCompile Include="src\FrameCounter.cpp" />
+    <ClCompile Include="src\Frames.cpp" />
+    <ClCompile Include="src\gol.cpp" />
+    <ClCompile Include="src\Joc.cpp" />
+    <ClCompile Include="src\Jugador.cpp" />
+    <ClCompile Include="src\Jugadorbase.cpp" />
+    <ClCompile Include="src\JugadorEstats.cpp" />
+    <ClCompile Include="src\LUAManager.cpp" />
+    <ClCompile Include="src\Marcador.cpp" />
+    <ClCompile Include="src\missatger.cpp" />
+    <ClCompile Include="src\Pantalla.cpp" />
+    <ClCompile Include="src\Pilota.cpp" />
+    <ClCompile Include="src\Porter.cpp" />
+    <ClCompile Include="src\PorterEstats.cpp" />
+    <ClCompile Include="src\Porteria.cpp" />
+    <ClCompile Include="src\Regio.cpp" />
+    <ClCompile Include="src\Renderator.cpp" />
+    <ClCompile Include="src\steeringbehaviors.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Animacio.h" />
+    <ClInclude Include="src\Autolist.h" />
+    <ClInclude Include="src\C2DMatrix.h" />
+    <ClInclude Include="src\CalculadoraPuntsSuport.h" />
+    <ClInclude Include="src\constants.h" />
+    <ClInclude Include="src\Entitat.h" />
+    <ClInclude Include="src\Entitatmobil.h" />
+    <ClInclude Include="src\EntitatsGestor.h" />
+    <ClInclude Include="src\Equip.h" />
+    <ClInclude Include="src\EquipEstats.h" />
+    <ClInclude Include="src\estat.h" />
+    <ClInclude Include="src\FrameCounter.h" />
+    <ClInclude Include="src\Frames.h" />
+    <ClInclude Include="src\general.h" />
+    <ClInclude Include="src\Joc.h" />
+    <ClInclude Include="src\Jugador.h" />
+    <ClInclude Include="src\Jugadorbase.h" />
+    <ClInclude Include="src\JugadorEstats.h" />
+    <ClInclude Include="src\JugadorMissatges.h" />
+    <ClInclude Include="src\LUAManager.h" />
+    <ClInclude Include="src\maquinaestats.h" />
+    <ClInclude Include="src\Marcador.h" />
+    <ClInclude Include="src\Missatge.h" />
+    <ClInclude Include="src\missatger.h" />
+    <ClInclude Include="src\Pantalla.h" />
+    <ClInclude Include="src\Pilota.h" />
+    <ClInclude Include="src\Porter.h" />
+    <ClInclude Include="src\PorterEstats.h" />
+    <ClInclude Include="src\Porteria.h" />
+    <ClInclude Include="src\punt3.h" />
+    <ClInclude Include="src\Regio.h" />
+    <ClInclude Include="src\Regulator.h" />
+    <ClInclude Include="src\Renderator.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="src\Sprite.h" />
+    <ClInclude Include="src\steeringbehaviors.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Gol.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon1.ico" />
+    <Image Include="soccer.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="camp.lua" />
+    <None Include="ChangeLog" />
+    <None Include="equip-blau.lua" />
+    <None Include="equip-groc.lua" />
+    <None Include="general.lua" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

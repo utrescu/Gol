@@ -1,0 +1,92 @@
+* Versió 0.06
+
+    - Començo a afegir l’estat de control de l’usuari
+    - Canvis en la representació per fer que desaparegui el ‘pampallugueix’ dels jugadors. M’he limitat a guardar 
+    el canvi durant l’espera per canviar el moviment de les cames.
+    - Intent de fer que siguin més agressius, he fet que provin la passada al davant per intentar fer més gols
+    - S’acaben de posar els diferents paràmetres en els fitxers o es carreguen automàticament de mica en mica
+    - (16-1-07) S’inicia la preparació de les estirades del porter, ja tinc les imatges i les classes, ara em falta 
+    com faig que volin per l’aire. (potser hauria de ser prou genèric com per permetre als jugadors saltar per rematar 
+    de cap)
+    - Començo a afegir opcions perquè el porter es pugui estirar (dos estats ESTIRAR i CAURE)
+    També s'afegeix una opció el el fitxer LUA pels porters per deixar el porter a terra després d'estirar-se    
+    - Multiplicats els comentaris en la porteria perquè al final no entenia res.
+    - Inici de les proves per fer que els jugadors xutin alt (senzill, però només hi ha problemes quan
+    es fan xuts a porta a màxima velocitat)
+    - (17-3-07) Està una mica aturat el desenvolupament perquè vaig massa atrafegat, però quan tingui uns dies de festa 
+    m’hi torno a posar.
+    - (12-4-07) Reescriptura total del subsistema gràfic perquè teníem problemes amb l’escalat de les imatges. L’escalat 
+    no funcionava bé perquè la imatge al ser escalada no permetia extreure amb precisió les imatges individuals. Això 
+    m’ha obligat a fer classes per gestionar les animacions, cosa que permetrà que es simplifiqui el codi i em permetrà 
+    canviar les imatges en funció de l’animació que vulguem i que el sistema gràfic estigui separat de la resta (cosa 
+    que és totalment recomanable).
+    - Alguns dels problemes que s’havien arreglat, ara han tornat a aparèixer amb el nou subsistema gràfic: cal arreglar
+    tot el que és de color blanc perquè SDL se’l menja, el temps entre imatges, i sembla que no retallo correctament.
+    - Solucionats els problemes del color, de retall. Ara només queda que a vegades sembla que s'arrosseguen i
+    hem de trobar perquè.
+    - S’ha d’afegir en el fitxer de configuració on són les coordenades de cada una de les animacions, per tant he de fer 
+    canvis en el fitxer de text.
+
+* Versió 0.05
+	- BUG: S'hauria d'haver solucionat el problema de que algun jugador xuti la pilota quan s'ha de fer 
+	sacada de porta. Simplement he posat que la pilota està a les mans del porter. (encara ho he 
+	detectat, però rarament passa)
+	- BUG: Faltava solucionar el problema de que el porter es posi a perseguir la pilota d'esquenes 
+	(en l'altra versió ho vaig fer només pels jugadors). 
+	- BUG: El porter a vegades es tornava boig i ignorava la pilota i se'n anava cap a mig camp. He trobat
+	algun cas, velocitat pilota quasi 0, funció mal implementada ...
+	- Afegida la possibilitat de jugar a pantalla sencera (sembla que tenim una lleugera millora en
+	els FPS)
+	- Afegida la opció de mostrar els FPS que està aconseguint el joc. (els envia a l'arxiu 
+	stdout.txt)
+		En la meva màquina:
+			- en Windows vaig al voltant de 49-51 (en Release) i 43-45 (en Debug)
+			- En Linux estic en 36 (no l'he provat a Pantalla sencera)
+	o sigui que estic a prop del límit actual de 40, en Windows, i l'he superat en Linux. 
+	- Implementació del comportament 'avoid_obstacles' per intentar millorar la persecució de la 
+	pilota quan hi ha algú al mig.
+	En aquest moment el perseguidor ja no s'enganxa a l'atacant i és més difícil fer gols...
+	- Canviat el #define de la gravetat per una constant.
+	- Modificacions generalitzades en el programa per poder canviar la resolució (hi ha un petit 
+	problema amb les línies vermelles quan passem a una resolució més petita, però si s'eliminen...
+	arreglat!)
+	- Quan un jugador espera la passada, si s'atura la pilota, la va a buscar.
+	- Ara en debug surt un quadrat taronja per indicar que té la possessió el porter
+	- Afegides més línies del funcionament del joc als logs
+	- Ara es carreguen les dades dels porters en l'script LUA. El porter ara es la taula "Porter" i els
+	  jugadors són "JugadorX" on X és el número de jugador. (s'ha incrementat la distancia mínima de 
+	  passada perquè perdien moltes pilotes per passades curtes)
+	- Afegida estratègia de joc per intentar fer els davanters més agressius. Si no estan marcats i són 
+	  a prop de la porteria contraria intentaran girar amb la pilota (He vist aconseguir algun gol gràcies
+	  a això, però encara retrassen la pilota tenint la porteria a l'abast).
+
+* Versió 0.04
+	- S'afegeix el z-order, es fan servir les coordenades dels peus, menys de la porteria per si fan 
+	  gol. He fet servir una classe Singleton amb un stl::vector per pintar només els que es veuen i 
+	  dynamic_cast<> per forçar cada objecte al seu tipus. He hagut de modificar la classe base Entitat 
+	  perquè em donés informació de quina classe derivada era però ha estat fàcil.
+	- Intent de solventar el "flick" en posicions molt properes al límit d'angles però no ha funcionat
+	- BUG: Solucionat el problema de que a vegades el jugador es posava a córrer d'esquenes, era degut a que 
+	  l'angle que es passava a la funció acos() era més petit que -1 ( -1.00000000095!! )i donava error
+	  i per tant es veia la primera imatge.
+
+* Versió 0.03 (26-9-2006)
+	- Acabo d'afegir les característiques dels jugadors des de LUA. Tarda més en carregar-ho tot, 
+	però sembla que funciona bé.
+	- El rendiment en Windows es força més bo.
+	- Es comencen a provar formes de fer el Z-Order gràfic
+	- BUG: Solucionat el problema del porter que sacava les fores des de fora del camp
+	- BUG: Solucionat el problema de que els jugadors no aixecaven la mà en Linux (Gnu C++), es fa amb el 
+	__cxa_demangle (info RTTI). Sembla que és perquè la sortida de typeid(*punter).name() no està 
+	normalitzada 
+
+* Versió 0.02 (23-08-2006)
+	- Comencem a definir constants des de scripts en LUA. El camp ja es carrega totalment des de l'script
+	- Es soluciona el problema del porter. Quan no sabia a qui passar es quedava aturat amb la pilota a 
+	les mans
+	- BUG: Es soluciona parcialment el problema amb les sacades de banda. Ara si la pilota torna a entrar 
+	al camp, també es pita la falta.
+	- BUG: Es descobreix un error en la estratègia defensiva agressiva i s'arregla. 
+
+* Versió 0.01 (19-08-2006)
+	La primera versió que fa alguna cosa. Encara té molts problemes, però funciona i fa veure que juga
