@@ -4,6 +4,8 @@ Es tracta d'un antic joc de futbol que vaig fer fa uns quants anys.
 
 En realitat dir-li joc és ser molt generós perquè els jugadors juguen sols i no s'hi pot interactuar però ...
 
+![Exemple](example.gif)
+
 ## Estratègies implementades
 
 Hi ha dos tipus d'estratègies:
@@ -48,6 +50,12 @@ L'script `configure` és qui se n'encarrega d'aquesta tasca
 ./configure
 ```
 
+Si no es tenen permisos d'administrador es pot definir una carpeta específica (que serà en la que s'instal·larà el programa):
+
+```bash
+./configure --prefix=/home/user/goltmp
+```
+
 Si tot acaba bé es crearà automàticament un fitxer Makefile
 
 ```bash
@@ -76,6 +84,16 @@ Al acabar hi haurà l'executable en el directori `src`:
 ```bash
 $ ls src/gol
 src/gol
+```
+
+### Instal·lar
+
+El procés d'instal·lació amb `make install` encara no el tinc pulit i per ara copia l'executable a `bin` i les dades a `shared`. El programa espera que estigui tot allà mateix o sigui que el millor és copiar l'executable en la carpeta de les dades:
+
+```bash
+cp src/gol data/gol
+cd data
+./gol
 ```
 
 ## TODO

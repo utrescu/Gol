@@ -10,6 +10,7 @@ AC_CONFIG_SRCDIR([src/gol.cpp])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_MACRO_DIRS([m4])
 
+
 # Checks for programs.
 AC_PROG_CXX
 AC_PROG_CC
@@ -43,5 +44,6 @@ AC_TYPE_SIZE_T
 AC_CHECK_FUNCS([atexit sqrt])
 
 AC_CONFIG_FILES([Makefile
-                 src/Makefile])
+                 src/Makefile
+                 data/Makefile ])
 AC_OUTPUT

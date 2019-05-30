@@ -11,7 +11,7 @@ gol_SOURCES = gol.cpp Joc.cpp Pantalla.cpp Pilota.cpp Porteria.cpp Jugador.cpp \
 			    CalculadoraPuntsSuport.cpp LUAManager.cpp Renderator.cpp
 
 # set the include path found by configure
-AM_CPPFLAGS =  $(LIBSDL_CFLAGS)  @LUA_INCLUDE@ $(all_includes)
+AM_CPPFLAGS =  $(LIBSDL_CFLAGS)  @LUA_INCLUDE@ $(all_includes) -DDATADIR=\"$(datadir)\"
 
 # the library search path.
 gol_LDFLAGS = $(all_libraries) $(LIBSDL_RPATH) -llua
