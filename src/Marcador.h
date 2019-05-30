@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 /***************************************************************************
  *   Copyright (C) 2006 by Xavier Sala   *
  *   utrescu@xaviersala.net   *

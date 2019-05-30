@@ -1,4 +1,9 @@
-* Versió 0.06
+* Versió 0.06b (30-06-2019)
+    - Arreglats alguns problemes amb la nova versió de C++ i canviada la llibreria de LUA per una de més actual
+    - Canviats els scripts autoconf
+    - Eliminat el projecte Kdevelop i VisualStudio
+
+* Versió 0.06 (22-12-2006)
 
     - Començo a afegir l’estat de control de l’usuari
     - Canvis en la representació per fer que desaparegui el ‘pampallugueix’ dels jugadors. M’he limitat a guardar 
@@ -90,3 +95,4 @@
 
 * Versió 0.01 (19-08-2006)
 	La primera versió que fa alguna cosa. Encara té molts problemes, però funciona i fa veure que juga
+
