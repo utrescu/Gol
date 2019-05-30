@@ -17,23 +17,23 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-const int     MININT    = (std::numeric_limits<int>::min)();
-const int     MAXINT    = (std::numeric_limits<int>::max)();
-const double  MAXDOUBLE = (std::numeric_limits<double>::max)();
-const double  MINDOUBLE = (std::numeric_limits<double>::min)();
-const float   MAXFLOAT  = (std::numeric_limits<float>::max)();
-const float   MINFLOAT  = (std::numeric_limits<float>::min)();
+const int MININT = (std::numeric_limits<int>::min)();
+const int MAXINT = (std::numeric_limits<int>::max)();
+const double MAXDOUBLE = (std::numeric_limits<double>::max)();
+const double MINDOUBLE = (std::numeric_limits<double>::min)();
+const float MAXIMFLOAT = std::numeric_limits<float>::max();
+const float MINFLOAT = (std::numeric_limits<float>::min)();
 // Constants numèriques
-const double PI        = 3.14159;
-const double DOSPI     = PI * 2;
-const double PIMITJOS  = PI / 2;
-const double PIQUARTS  = PI / 4;
+const double PI = 3.14159;
+const double DOSPI = PI * 2;
+const double PIMITJOS = PI / 2;
+const double PIQUARTS = PI / 4;
 // Perquè em fa falta per representar el jugador
 // M'estalvio una divisió flotant en cada loop...
-const double QUATREDIVPI = 4 / PI; 
+const double QUATREDIVPI = 4 / PI;
 
 const double FREGAMENT = -0.1;
-const double DOSFREGAMENT = FREGAMENT*FREGAMENT;
+const double DOSFREGAMENT = FREGAMENT * FREGAMENT;
 const double GRAVETAT = -10.0;
 
-const double PAS=0.1;
+const double PAS = 0.1;

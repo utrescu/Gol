@@ -23,27 +23,27 @@
 	@author Xavier Sala <utrescu@xaviersala.net>
 */
 
-#include <SDL.h>
+#include <SDL/SDL.h>
 
 class Frames
 {
 	// Sempre tindré una còpia del original per no perdre qualitat
-	SDL_Surface* Origen;
+	SDL_Surface *Origen;
 	// Aquest és el que mostrarem...
-	SDL_Surface* Real;
+	SDL_Surface *Real;
 	// Temps d'espera entre aquesta imatge i l'altra
 	Uint32 tempsEspera;
 	// A quina escala està la imatge
 	double EscalaActual;
 
 public:
-	Frames(SDL_Surface* imatge, Uint32 temps);
-	Frames(SDL_Surface* orig, SDL_Rect rec, Uint32 temps);
+	Frames(SDL_Surface *imatge, Uint32 temps);
+	Frames(SDL_Surface *orig, SDL_Rect rec, Uint32 temps);
 	~Frames(void);
-	SDL_Surface* getImatge() { return Real; }
+	SDL_Surface *getImatge() { return Real; }
 	void setEscala(double b);
 	Uint32 getEspera() { return tempsEspera; }
-	void setEspera(Uint32 d) { tempsEspera=d; }
+	void setEspera(Uint32 d) { tempsEspera = d; }
 
 	int getAltura() { return Real->h; }
 	int getAmplada() { return Real->w; }

@@ -19,23 +19,23 @@
  ***************************************************************************/
 #pragma once
 
-#include <SDL_framerate.h>
+#include <SDL/SDL_framerate.h>
 #include "Pantalla.h"
 
 class Joc
 {
-private: 
+private:
 	// Marcador
-	int ResolucioX; 
-	int ResolucioY; 
+	int ResolucioX;
+	int ResolucioY;
 	int Colors;
-	double Escala; 
+	double Escala;
 
 	SDL_Surface *FonsPantalla;
-	bool IntersectRect(SDL_Rect *dest,const SDL_Rect *src1,const SDL_Rect *src2);
+	bool IntersectRect(SDL_Rect *dest, const SDL_Rect *src1, const SDL_Rect *src2);
 	int PantallaJoc();
 	int PantallaIntro();
-	
+
 	// FPSmanager * manager;
 	FPSmanager manager;
 	// int PantallaEstatica(int NumPantalla, char* fitxer);

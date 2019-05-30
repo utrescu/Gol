@@ -4,3 +4,12 @@ optimitzed
 .svn
 *~
 Backup
+.vscode
+*.o
+*.Po
+config.status
+config.log
+config.h
+stamp-h1
+libtool
+Makefile

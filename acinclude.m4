@@ -1,68 +1,78 @@
-# Configure paths for SDLmm
-# David Hedbor, 2000-07-22
-# stolen from SDL 
+# Configure paths for SDL
+# Sam Lantinga 9/21/99
 # stolen from Manish Singh
 # stolen back from Frank Belew
 # stolen from Manish Singh
 # Shamelessly stolen from Owen Taylor
 
-dnl AM_PATH_SDLMM([MINIMUM-VERSION, [ACTION-IF-FOUND [, ACTION-IF-NOT-FOUND]]])
-dnl Test for SDLmm, and define SDLMM_CXXFLAGS and SDLMM_LIBS
+# serial 1
+
+dnl AM_PATH_SDL([MINIMUM-VERSION, [ACTION-IF-FOUND [, ACTION-IF-NOT-FOUND]]])
+dnl Test for SDL, and define SDL_CFLAGS and SDL_LIBS
 dnl
-AC_DEFUN(AM_PATH_SDLMM,
+AC_DEFUN([AM_PATH_SDL],
 [dnl 
-dnl Get the cflags and libraries from the ismap-config script
+dnl Get the cflags and libraries from the sdl-config script
 dnl
-AC_ARG_WITH(sdlmm-prefix,[  --with-sdlmm-prefix=PFX   Prefix where SDLmm is installed (optional)],
-            sdlmm_prefix="$withval", sdlmm_prefix="")
-AC_ARG_WITH(sdlmm-exec-prefix,[  --with-sdlmm-exec-prefix=PFX Exec prefix where SDLmm is installed (optional)],
-            sdlmm_exec_prefix="$withval", sdlmm_exec_prefix="")
-AC_ARG_ENABLE(sdlmmtest, [  --disable-sdlmmtest       Do not try to compile and run a test SDLmm program],
-		    , enable_sdlmmtest=yes)
+AC_ARG_WITH(sdl-prefix,[  --with-sdl-prefix=PFX   Prefix where SDL is installed (optional)],
+            sdl_prefix="$withval", sdl_prefix="")
+AC_ARG_WITH(sdl-exec-prefix,[  --with-sdl-exec-prefix=PFX Exec prefix where SDL is installed (optional)],
+            sdl_exec_prefix="$withval", sdl_exec_prefix="")
+AC_ARG_ENABLE(sdltest, [  --disable-sdltest       Do not try to compile and run a test SDL program],
+		    , enable_sdltest=yes)
 
-  if test x$sdlmm_exec_prefix != x ; then
-     sdlmm_args="$sdlmm_args --exec-prefix=$sdlmm_exec_prefix"
-     if test x${SDLMM_CONFIG+set} != xset ; then
-        SDLMM_CONFIG=$sdlmm_exec_prefix/bin/sdlmm-config
-     fi
+  if test x$sdl_exec_prefix != x ; then
+    sdl_config_args="$sdl_config_args --exec-prefix=$sdl_exec_prefix"
+    if test x${SDL_CONFIG+set} != xset ; then
+      SDL_CONFIG=$sdl_exec_prefix/bin/sdl-config
+    fi
   fi
-  if test x$sdlmm_prefix != x ; then
-     sdlmm_args="$sdlmm_args --prefix=$sdlmm_prefix"
-     if test x${SDLMM_CONFIG+set} != xset ; then
-        SDLMM_CONFIG=$sdlmm_prefix/bin/sdlmm-config
-     fi
+  if test x$sdl_prefix != x ; then
+    sdl_config_args="$sdl_config_args --prefix=$sdl_prefix"
+    if test x${SDL_CONFIG+set} != xset ; then
+      SDL_CONFIG=$sdl_prefix/bin/sdl-config
+    fi
   fi
 
-  AC_PATH_PROG(SDLMM_CONFIG, sdlmm-config, no)
-  min_sdlmm_version=ifelse([$1], ,0.11.0,$1)
-  AC_MSG_CHECKING(for SDLmm version >= $min_sdlmm_version)
-  no_sdlmm=""
-  if test "$SDLMM_CONFIG" = "no" ; then
-    no_sdlmm=yes
+  as_save_PATH="$PATH"
+  if test "x$prefix" != xNONE && test "$cross_compiling" != yes; then
+    PATH="$prefix/bin:$prefix/usr/bin:$PATH"
+  fi
+  AC_PATH_PROG(SDL_CONFIG, sdl-config, no, [$PATH])
+  PATH="$as_save_PATH"
+  min_sdl_version=ifelse([$1], ,0.11.0,$1)
+  AC_MSG_CHECKING(for SDL - version >= $min_sdl_version)
+  no_sdl=""
+  if test "$SDL_CONFIG" = "no" ; then
+    no_sdl=yes
   else
-    SDLMM_CXXFLAGS=`$SDLMM_CONFIG $sdlmmconf_args --cflags`
-    SDLMM_LIBS=`$SDLMM_CONFIG $sdlmmconf_args --libs`
+    SDL_CFLAGS=`$SDL_CONFIG $sdl_config_args --cflags`
+    SDL_LIBS=`$SDL_CONFIG $sdl_config_args --libs`
 
-    sdlmm_major_version=`$SDLMM_CONFIG $sdlmm_args --version | \
+    sdl_major_version=`$SDL_CONFIG $sdl_config_args --version | \
            sed 's/\([[0-9]]*\).\([[0-9]]*\).\([[0-9]]*\)/\1/'`
-    sdlmm_minor_version=`$SDLMM_CONFIG $sdlmm_args --version | \
+    sdl_minor_version=`$SDL_CONFIG $sdl_config_args --version | \
            sed 's/\([[0-9]]*\).\([[0-9]]*\).\([[0-9]]*\)/\2/'`
-    sdlmm_micro_version=`$SDLMM_CONFIG $sdlmm_config_args --version | \
+    sdl_micro_version=`$SDL_CONFIG $sdl_config_args --version | \
            sed 's/\([[0-9]]*\).\([[0-9]]*\).\([[0-9]]*\)/\3/'`
-    if test "x$enable_sdlmmtest" = "xyes" ; then
+    if test "x$enable_sdltest" = "xyes" ; then
+      ac_save_CFLAGS="$CFLAGS"
       ac_save_CXXFLAGS="$CXXFLAGS"
       ac_save_LIBS="$LIBS"
-      CXXFLAGS="$CXXFLAGS $SDLMM_CXXFLAGS"
-      LIBS="$LIBS $SDLMM_LIBS"
+      CFLAGS="$CFLAGS $SDL_CFLAGS"
+      CXXFLAGS="$CXXFLAGS $SDL_CFLAGS"
+      LIBS="$LIBS $SDL_LIBS"
 dnl
-dnl Now check if the installed SDLmm is sufficiently new. (Also sanity
-dnl checks the results of sdlmm-config to some extent
+dnl Now check if the installed SDL is sufficiently new. (Also sanity
+dnl checks the results of sdl-config to some extent
 dnl
-      rm -f conf.sdlmmtest
+      rm -f conf.sdltest
       AC_TRY_RUN([
-#include <cstdio>
-#include <cstring>
-#include "SDLmm/sdlmm.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "SDL.h"
+
 char*
 my_strdup (char *str)
 {
@@ -70,8 +80,8 @@ my_strdup (char *str)
   
   if (str)
     {
-      new_str = (char *)malloc ((std::strlen (str) + 1) * sizeof(char));
-      std::strcpy (new_str, str);
+      new_str = (char *)malloc ((strlen (str) + 1) * sizeof(char));
+      strcpy (new_str, str);
     }
   else
     new_str = NULL;
@@ -85,64 +95,71 @@ int main (int argc, char *argv[])
   char *tmp_version;
 
   /* This hangs on some systems (?)
-  system ("touch conf.sdlmmtest");
+  system ("touch conf.sdltest");
   */
-  { FILE *fp = fopen("conf.sdlmmtest", "a"); if ( fp ) fclose(fp); }
+  { FILE *fp = fopen("conf.sdltest", "a"); if ( fp ) fclose(fp); }
 
   /* HP/UX 9 (%@#!) writes to sscanf strings */
-  tmp_version = my_strdup("$min_sdlmm_version");
+  tmp_version = my_strdup("$min_sdl_version");
   if (sscanf(tmp_version, "%d.%d.%d", &major, &minor, &micro) != 3) {
-     printf("%s, bad version string\n", "$min_sdlmm_version");
-     return 1;
+     printf("%s, bad version string\n", "$min_sdl_version");
+     exit(1);
    }
 
-   if (($sdlmm_major_version > major) ||
-      (($sdlmm_major_version == major) && ($sdlmm_minor_version > minor)) ||
-      (($sdlmm_major_version == major) && ($sdlmm_minor_version == minor) && ($sdlmm_micro_version >= micro)))
+   if (($sdl_major_version > major) ||
+      (($sdl_major_version == major) && ($sdl_minor_version > minor)) ||
+      (($sdl_major_version == major) && ($sdl_minor_version == minor) && ($sdl_micro_version >= micro)))
     {
       return 0;
     }
   else
     {
-      printf("\n*** 'sdlmm-config --version' returned %d.%d.%d, but the minimum version\n", $sdlmm_major_version, $sdlmm_minor_version, $sdlmm_micro_version);
-      printf("*** of SDLmm required is %d.%d.%d. If sdlmm-config is correct, then it is\n", major, minor, micro);
+      printf("\n*** 'sdl-config --version' returned %d.%d.%d, but the minimum version\n", $sdl_major_version, $sdl_minor_version, $sdl_micro_version);
+      printf("*** of SDL required is %d.%d.%d. If sdl-config is correct, then it is\n", major, minor, micro);
       printf("*** best to upgrade to the required version.\n");
-      printf("*** If sdlmm-config was wrong, set the environment variable SDLMM_CONFIG\n");
-      printf("*** to point to the correct copy of sdlmm-config, and remove the file\n");
+      printf("*** If sdl-config was wrong, set the environment variable SDL_CONFIG\n");
+      printf("*** to point to the correct copy of sdl-config, and remove the file\n");
       printf("*** config.cache before re-running configure\n");
       return 1;
     }
 }
 
-],, no_sdlmm=yes,[echo $ac_n "cross compiling; assumed OK... $ac_c"])
+],, no_sdl=yes,[echo $ac_n "cross compiling; assumed OK... $ac_c"])
+       CFLAGS="$ac_save_CFLAGS"
        CXXFLAGS="$ac_save_CXXFLAGS"
        LIBS="$ac_save_LIBS"
      fi
   fi
-  if test "x$no_sdlmm" = x ; then
+  if test "x$no_sdl" = x ; then
      AC_MSG_RESULT(yes)
      ifelse([$2], , :, [$2])     
   else
      AC_MSG_RESULT(no)
-     if test "$SDLMM_CONFIG" = "no" ; then
-       echo "*** The sdlmm-config script installed by SDLmm could not be found"
-       echo "*** If SDLmm was installed in PREFIX, make sure PREFIX/bin is in"
-       echo "*** your path, or set the SDLMM_CONFIG environment variable to the"
-       echo "*** full path to sdlmm-config."
+     if test "$SDL_CONFIG" = "no" ; then
+       echo "*** The sdl-config script installed by SDL could not be found"
+       echo "*** If SDL was installed in PREFIX, make sure PREFIX/bin is in"
+       echo "*** your path, or set the SDL_CONFIG environment variable to the"
+       echo "*** full path to sdl-config."
      else
-       if test -f conf.sdlmmtest ; then
+       if test -f conf.sdltest ; then
         :
        else
-          echo "*** Could not run SDLmm test program, checking why..."
-          CXXFLAGS="$CXXFLAGS $SDLMM_CXXFLAGS"
-          LIBS="$LIBS $SDLMM_LIBS"
+          echo "*** Could not run SDL test program, checking why..."
+          CFLAGS="$CFLAGS $SDL_CFLAGS"
+          CXXFLAGS="$CXXFLAGS $SDL_CFLAGS"
+          LIBS="$LIBS $SDL_LIBS"
           AC_TRY_LINK([
-#include <cstdio>
-#include "sdlmm.h"
+#include <stdio.h>
+#include "SDL.h"
+
+int main(int argc, char *argv[])
+{ return 0; }
+#undef  main
+#define main K_and_R_C_main
 ],      [ return 0; ],
         [ echo "*** The test program compiled, but did not run. This usually means"
-          echo "*** that the run-time linker is not finding SDLmm or finding the wrong"
-          echo "*** version of SDLmm. If it is not finding SDLmm, you'll need to set your"
+          echo "*** that the run-time linker is not finding SDL or finding the wrong"
+          echo "*** version of SDL. If it is not finding SDL, you'll need to set your"
           echo "*** LD_LIBRARY_PATH environment variable, or edit /etc/ld.so.conf to point"
           echo "*** to the installed location  Also, make sure you have run ldconfig if that"
           echo "*** is required on your system"
@@ -150,18 +167,19 @@ int main (int argc, char *argv[])
           echo "*** If you have an old version installed, it is best to remove it, although"
           echo "*** you may also be able to get things to work by modifying LD_LIBRARY_PATH"],
         [ echo "*** The test program failed to compile or link. See the file config.log for the"
-          echo "*** exact error that occured. This usually means SDLmm was incorrectly installed"
-          echo "*** or that you have moved SDLmm since it was installed. In the latter case, you"
-          echo "*** may want to edit the sdlmm-config script: $SDLMM_CONFIG" ])
+          echo "*** exact error that occured. This usually means SDL was incorrectly installed"
+          echo "*** or that you have moved SDL since it was installed. In the latter case, you"
+          echo "*** may want to edit the sdl-config script: $SDL_CONFIG" ])
+          CFLAGS="$ac_save_CFLAGS"
           CXXFLAGS="$ac_save_CXXFLAGS"
           LIBS="$ac_save_LIBS"
        fi
      fi
-     SDLMM_CXXFLAGS=""
-     SDLMM_LIBS=""
+     SDL_CFLAGS=""
+     SDL_LIBS=""
      ifelse([$3], , :, [$3])
   fi
-  AC_SUBST(SDLMM_CXXFLAGS)
-  AC_SUBST(SDLMM_LIBS)
-  rm -f conf.sdlmmtest
+  AC_SUBST(SDL_CFLAGS)
+  AC_SUBST(SDL_LIBS)
+  rm -f conf.sdltest
 ])

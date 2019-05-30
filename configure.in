@@ -82,6 +82,15 @@ if test -n "$LIBSDL_CONFIG"; then
      AC_DEFINE_UNQUOTED(HAVE_LIBSDL, 1, [Defines if your system has the LIBSDL library])
 fi
 
+dnl Check for SDL
+  SDL_VERSION=1.2.0
+  AM_PATH_SDL($SDL_VERSION,
+            :,
+            AC_MSG_ERROR([*** SDL version $SDL_VERSION not found!])
+  )
+  CFLAGS="$CFLAGS $SDL_CFLAGS"
+  LIBS="$LIBS $SDL_LIBS"
+
 
 AC_SUBST(LIBSDL_LIBS)
 AC_SUBST(LIBSDL_CFLAGS)
