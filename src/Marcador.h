@@ -19,6 +19,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include <SDL/SDL_ttf.h>
+#include <string>
 
 enum QuinEquip
 {
@@ -38,4 +39,5 @@ public:
     void HaMarcat(int costat);
     void Pinta(SDL_Surface *fons);
     int Inicia(void);
+    std::string ToString();
 };

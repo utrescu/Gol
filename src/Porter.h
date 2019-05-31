@@ -51,7 +51,7 @@ class Porter : public JugadorBase
 	// Determina si estem en ple estirament o no
 	bool EsticEstirat;
 public:
-    Porter(const char *fitxerimatge, const char *nom, Equip* nos, SDL_Rect casa, Estat<Porter>* estatinicial, 
+    Porter(const char *fitxerimatge, const char *nom, Equip* nos, Regio casa, Estat<Porter>* estatinicial,
 		   Punt3 mirant, double radi,Punt3 velocitat, double massa, double maxforce, 
 		   double maxvelocamb, double maxvelocsense, double maxgir, double xut, double punteria,
 		   double provaxut, double passades, double zconf, double dista, double espera, double dribling, 

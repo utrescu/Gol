@@ -918,6 +918,7 @@ void JugadorEstatSacaDeBanda::Execute(Jugador *player)
 void JugadorEstatSacaDeBanda::Exit(Jugador *player)
 {
 	// La pilota torna a estar en joc
+	printf("PUBLIC: La pilota ja roda\n");
 	player->getCamp()->setPartitEnJoc(true);
 }
 

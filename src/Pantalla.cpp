@@ -52,6 +52,9 @@ Pantalla::Pantalla(void)
 	ZoomX = 0.0;
 	ZoomY = 0.0;
 
+	// EsGolALaPorteria = -1;
+	// Sacador = 0; // local
+
 	EnJoc = false;
 	LaTeElPorter = false;
 }
@@ -122,8 +125,8 @@ void Pantalla::Carrega(SDL_Surface *pp, double Escala)
 	SDL_FreeSurface(temp);
 
 	// Marca on es la zona de joc
-	ZonaTerreny.x = lm->getTaulaNumeroint("TerrenyDeJoc", "x") * ZoomX;										// 62*ZoomX);
-	ZonaTerreny.y = lm->getTaulaNumeroint("TerrenyDeJoc", "y") * ZoomY;										// 24*ZoomY);
+	ZonaTerreny.x = lm->getTaulaNumeroint("TerrenyDeJoc", "x") * ZoomX;					  // 62*ZoomX);
+	ZonaTerreny.y = lm->getTaulaNumeroint("TerrenyDeJoc", "y") * ZoomY;					  // 24*ZoomY);
 	ZonaTerreny.w = (lm->getTaulaNumeroint("TerrenyDeJoc", "w") * ZoomX) - ZonaTerreny.x; // 1137
 	ZonaTerreny.h = (lm->getTaulaNumeroint("TerrenyDeJoc", "h") * ZoomY) - ZonaTerreny.y; // 649
 
@@ -178,12 +181,12 @@ void Pantalla::Carrega(SDL_Surface *pp, double Escala)
 	// Crear les porteries:
 	// Han d'estar just allà on comença i acaba el camp, per tant ho forço
 	Marca[EQUIP_LOCAL] = new Porteria(getFullFileName(nom).c_str(), EQUIP_LOCAL, ZoomX, ZoomY, ZonaTerreny.x,
-																		lm->getTaulaNumeroint("Porteria1", "y"), lm->getTaulaNumeroint("Porteria1", "altura"),
-																		paldalt, palbaix, palample, zonagolx, zonagoly);
+									  lm->getTaulaNumeroint("Porteria1", "y"), lm->getTaulaNumeroint("Porteria1", "altura"),
+									  paldalt, palbaix, palample, zonagolx, zonagoly);
 
 	Marca[EQUIP_VISITANT] = new Porteria(getFullFileName(nom).c_str(), EQUIP_VISITANT, ZoomX, ZoomY, ZonaTerreny.x + ZonaTerreny.w,
-																			 lm->getTaulaNumeroint("Porteria2", "y"), lm->getTaulaNumeroint("Porteria2", "altura"),
-																			 paldalt, palbaix, palample, zonagolx, zonagoly);
+										 lm->getTaulaNumeroint("Porteria2", "y"), lm->getTaulaNumeroint("Porteria2", "altura"),
+										 paldalt, palbaix, palample, zonagolx, zonagoly);
 
 	//	new Porteria(nom,VISITANT ,ZoomX,ZoomY, 1138, 234, 47, 279, 406, 4, 283, 400 );
 
@@ -250,6 +253,7 @@ void Pantalla::PosicionaMig()
 	// Posicionem al Z-Order
 	bimba->setZOrder((int)TerrenyDeJoc->getPuntMig().y + bimba->getAltura());
 	// bimba->setPosicioImatge(tempPilota);
+	printf("Marcador: %s\n", resultat.ToString().c_str());
 	bimba->AlliberaPilota();
 	// Variables de control
 
@@ -327,6 +331,7 @@ void Pantalla::Mou(int pix, int piy)
 							printf("---------- Gol en Propia porta?\n");
 						}
 #endif
+						printf("PUBLIC: Gol! Gol!\n");
 						EnJoc = false;
 						EsGolALaPorteria = Perill;
 						bimba->CapturaPilota(Marca[Perill]->getTerra(), true);
@@ -355,7 +360,7 @@ void Pantalla::Mou(int pix, int piy)
 							printf("-------- pilota al pal\n");
 						}
 #endif
-
+						printf("PUBLIC: Ui! Al pal!\n");
 						bimba->InverteixXut(2);
 						EnJoc = true;
 						break;
@@ -370,6 +375,7 @@ void Pantalla::Mou(int pix, int piy)
 							printf("----------- Còrner?\n");
 						}
 #endif
+						printf("PUBLIC: Fora del camp!\n");
 						EnJoc = false;
 						bimba->CapturaPilota(Marca[Perill]->getTerra(), false);
 						// Fer a la gent tornar

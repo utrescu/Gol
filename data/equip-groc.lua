@@ -42,7 +42,7 @@ Porter = {
 -- Segon jugador
 
 Jugador1 = { 
-	Nom = "Pau", Numero = 2, Imatge = "groc.lua", 
+	Nom = "Pau1", Numero = 2, Imatge = "groc.lua", 
 	-- Per les animacions
 	Animacions = 2,	
 	-- De què juga el jugador: 1-> porter 2-> defensa 3->migcapista 4->davanter
@@ -67,7 +67,7 @@ Jugador1 = {
 }
 
 Jugador2 = { 
-	Nom = "Pau", Numero = 3, Imatge = "groc.lua", 
+	Nom = "Pau2", Numero = 3, Imatge = "groc.lua", 
 	-- Per les animacions
 	Animacions = 2,	
 	-- De què juga el jugador: 1-> porter 2-> defensa 3->migcapista 4->davanter
@@ -92,7 +92,7 @@ Jugador2 = {
 }
 
 Jugador3 = { 
-	Nom = "Pau", Numero = 4, Imatge = "groc.lua", 
+	Nom = "Pau3", Numero = 4, Imatge = "groc.lua", 
 	-- Per les animacions
 	Animacions = 2,	
 	-- De què juga el jugador: 1-> porter 2-> defensa 3->migcapista 4->davanter
@@ -117,7 +117,7 @@ Jugador3 = {
 }
 
 Jugador4 = { 
-	Nom = "Pau", Numero = 5, Imatge = "groc.lua", 
+	Nom = "Pau4", Numero = 5, Imatge = "groc.lua", 
 	-- Per les animacions
 	Animacions = 2,	
 	-- De què juga el jugador: 1-> porter 2-> defensa 3->migcapista 4->davanter
@@ -142,7 +142,7 @@ Jugador4 = {
 }
 
 Jugador5 = { 
-	Nom = "Pau", Numero = 6, Imatge = "groc.lua", 
+	Nom = "Pau5", Numero = 6, Imatge = "groc.lua", 
 	-- Per les animacions
 	Animacions = 2,	
 	-- De què juga el jugador: 1-> porter 2-> defensa 3->migcapista 4->davanter
@@ -167,7 +167,7 @@ Jugador5 = {
 }
 
 Jugador6 = { 
-	Nom = "Pau", Numero = 7, Imatge = "groc.lua", 
+	Nom = "Pau6", Numero = 7, Imatge = "groc.lua", 
 	-- Per les animacions
 	Animacions = 2,	
 	-- De què juga el jugador: 1-> porter 2-> defensa 3->migcapista 4->davanter
@@ -192,7 +192,7 @@ Jugador6 = {
 }
 
 Jugador7 = { 
-	Nom = "Pau", Numero = 8, Imatge = "groc.lua", 
+	Nom = "Pau7", Numero = 8, Imatge = "groc.lua", 
 	-- Per les animacions
 	Animacions = 2,	
 	-- De què juga el jugador: 1-> porter 2-> defensa 3->migcapista 4->davanter

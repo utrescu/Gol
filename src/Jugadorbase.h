@@ -26,9 +26,9 @@
 #include "Equip.h"
 #include "Pantalla.h"
 
-// ---- CONSTANTS QUE PODRIEN SER VARIABLES DELS JUGADORS ---- 
-#define FREQUENCIAXUTSPERSEGON              8
-#define DISTANCIAATACANTSGIREN            475 // 468
+// ---- CONSTANTS QUE PODRIEN SER VARIABLES DELS JUGADORS ----
+#define FREQUENCIAXUTSPERSEGON 8
+#define DISTANCIAATACANTSGIREN 475 // 468
 
 class Regio;
 class Equip;
@@ -36,30 +36,38 @@ class Equip;
 	@author Xavier Sala <xavier@norimaki.xaviersala.net>
 */
 class JugadorBase : public EntitatMobil,
-                   public AutoList<JugadorBase>
+					public AutoList<JugadorBase>
 {
-public:	
-	enum jugo_de{ porter=1, defensa=2, migcampista=3, davanter=4};
+public:
+	std::string NomJugador;
+	enum jugo_de
+	{
+		porter = 1,
+		defensa = 2,
+		migcampista = 3,
+		davanter = 4
+	};
+
 protected:
 	jugo_de DeQueJugo;
 	// Posicio en la que estem quan comença el partit
 	// nomes serveix per posicionar-lo inicialment i despres dels gols
-	Regio* RegioInicial;
+	Regio *RegioInicial;
 	// Zona del camp a la que juga el jugador
-	Regio* RegioNormal;
+	Regio *RegioNormal;
 	// Classe de comportaments
-	SteeringBehaviors* ComportamentJugador; // Behaviors
+	SteeringBehaviors *ComportamentJugador; // Behaviors
 	// Punter al nostre equip
 	Equip *Nosaltres;
-	// Distancia del jugador a la pilota al quadrat (al cap i a la fi es el mateix que sense quadrat) 
-	double  DistanciaAPilota;
+	// Distancia del jugador a la pilota al quadrat (al cap i a la fi es el mateix que sense quadrat)
+	double DistanciaAPilota;
 
 	// ---- Caracteristiques especifiques dels jugadors ----
-	double JUG_VelocitatSense; 
-	double JUG_VelocitatAmb; 
+	double JUG_VelocitatSense;
+	double JUG_VelocitatAmb;
 	// xuts
-	double JUG_ForcaXut; 
-	double JUG_Punteria; 
+	double JUG_ForcaXut;
+	double JUG_Punteria;
 	double JUG_XutaIgualment;
 	// passades
 	double JUG_DistanciaMinimaPassada;
@@ -79,77 +87,78 @@ protected:
 	double JUG_PilotaAbastDesti;
 	// -----------------------------------------------------
 
-
 public:
-	JugadorBase(Equip* equ, SDL_Rect casa, Punt3 Mirant, double radi, Punt3 Veloc, double massa, 
-		    double max_force, double maxvelocamb, double maxvelocsense, double max_turn, double xut, double punteria,
-			double provaxut, double passades, double zconf, double dista, double espera, double dribling, jugo_de deq);
-	
+	JugadorBase(Equip *equ, std::string nom, Regio casa, Punt3 Mirant, double radi, Punt3 Veloc, double massa,
+				double max_force, double maxvelocamb, double maxvelocsense, double max_turn, double xut, double punteria,
+				double provaxut, double passades, double zconf, double dista, double espera, double dribling, jugo_de deq);
+
 	~JugadorBase();
 	// Torna quin paper fa el jugador (porter, defensa, etc..)
-	jugo_de getDeQueFaig()const{return DeQueJugo;}
-	// Ens torna un punter al nostre equip 
-	Equip* getEquip() const { return Nosaltres; }
-	// Un punter al terreny de joc 
-	Pantalla* getCamp() const { return getEquip()->getCamp(); }
-	
-	Regio* getRegioInicial() { return RegioInicial; }
-	void setRegioInicial(Regio* reg) { RegioInicial = reg; }
-	Regio* getRegioNormal() { return RegioNormal; }
-	void setRegioNormal(SDL_Rect reg) 
-	{ 
-		if (RegioNormal!=NULL) delete RegioNormal;
-		RegioNormal = new Regio(0,reg); 
+	jugo_de getDeQueFaig() const { return DeQueJugo; }
+	// Ens torna un punter al nostre equip
+	Equip *getEquip() const { return Nosaltres; }
+	// Un punter al terreny de joc
+	Pantalla *getCamp() const { return getEquip()->getCamp(); }
+
+	Regio *getRegioInicial() { return RegioInicial; }
+	void setRegioInicial(Regio *reg) { RegioInicial = reg; }
+	Regio *getRegioNormal() { return RegioNormal; }
+	void setRegioNormal(Regio reg)
+	{
+		if (RegioNormal != NULL)
+			delete RegioNormal;
+		RegioNormal = new Regio(0, reg);
 	}
-	
-	void setTornaARegioInicial() { RegioNormal = RegioInicial;}
-	
+
+	void setTornaARegioInicial() { RegioNormal = RegioInicial; }
+
 	// ----------------------- Tractament de la Pilota -------------------------
 	// Ens torna un punter a la pilota (per saber on es)
-	Pilota* const getPilota()const;
-	
-	void setDistanciaAPilota(double dis) { DistanciaAPilota=dis; }
-	double getDistanciaAPilota() { return DistanciaAPilota;}
-	
-	void MiraPilota() { 
+	Pilota *const getPilota() const;
+
+	void setDistanciaAPilota(double dis) { DistanciaAPilota = dis; }
+	double getDistanciaAPilota() { return DistanciaAPilota; }
+
+	void MiraPilota()
+	{
 		// printf("####### %d Mira a (%f,%f,%f) -->",getID(),MirantA.x,MirantA.y,MirantA.h);
 		RodaCapA(getPilota()->getPosicio());
 		// printf("(%f,%f,%f)\n",MirantA.x,MirantA.y,MirantA.h);
 	};
-	
-	//returna si el porter pot retenir la pilota 
-	bool isPilotaAbastPorter() const; 
+
+	//returna si el porter pot retenir la pilota
+	bool isPilotaAbastPorter() const;
 	// retorna si podem xutar la pilota
 	bool isPilotaAbastDeXut() const;
-	
+
 	//returns true if a ball comes within range of a receiver
-	bool isPilotaAbastDeRecepcio()const;
-	// Diu si el jugador es el mes proper a la pilota del nostre equip 
+	bool isPilotaAbastDeRecepcio() const;
+	// Diu si el jugador es el mes proper a la pilota del nostre equip
 	bool isMesProperAPilota() const;
 	// Diu si el jugador es el mes proper de TOTS a la pilota
-	bool isElMesProperDelCampAPilota()const;
-	// Ens pot servir per saber si estem en fora de joc, ja que som els mes propers a la porteria 
-	// contraria (fins i tot mes que els contraris) 
+	bool isElMesProperDelCampAPilota() const;
+	// Ens pot servir per saber si estem en fora de joc, ja que som els mes propers a la porteria
+	// contraria (fins i tot mes que els contraris)
 	bool isElMesProperDelCampAPorteriaContraria() const;
-	// Diu si estem controlant la pilota 
-	bool isControlantPilota()const;
-	// Estic mes endavant que el que porta la pilota 
-	bool isMesEndavantQueLAtacant()const;
-	// Estic envoltat o no puc passar 
+	// Diu si estem controlant la pilota
+	bool isControlantPilota() const;
+	// Estic mes endavant que el que porta la pilota
+	bool isMesEndavantQueLAtacant() const;
+	// Estic envoltat o no puc passar
 	bool isEsticMarcat() const;
 	// -------------- Pilota end -----------------------------------------------
-	// Ens diu si la posicio especificada esta davant del nostre jugador 
-	bool isPosicioDavantNostra(Punt3 position)const;
-	// Estem en una zona propera a la porteria contraria 
-	bool isInZonaCalenta()const;
-	
-	SteeringBehaviors* getComportament() { return ComportamentJugador; }
+	// Ens diu si la posicio especificada esta davant del nostre jugador
+	bool isPosicioDavantNostra(Punt3 position) const;
+	// Estem en una zona propera a la porteria contraria
+	bool isInZonaCalenta() const;
+
+	SteeringBehaviors *getComportament() { return ComportamentJugador; }
 	bool isADesti();
-	
+
 	bool isACasa();
-			
-	double DistanciaPorteriaContraria()const;
-	double DistanciaPorteriaNostra()const;	
+
+	double DistanciaPorteriaContraria() const;
+	double DistanciaPorteriaNostra() const;
 	// Fara mirar al jugador cap al punt mig
 	void MiraReves()
 	{
@@ -157,11 +166,11 @@ public:
 	}
 
 	// Fara mirar al jugador cap a l'objectiu que tingui
-	void MiraObjectiu() 
+	void MiraObjectiu()
 	{
-		setMirant(VectorNormalitza(getComportament()->getTarget() - getPosicio()));	
+		setMirant(VectorNormalitza(getComportament()->getTarget() - getPosicio()));
 	}
-	
+
 	// --------  Caracteristiques dels jugadors  ------------------------
 	// velocitats
 	double Jugador_VelocitatSense() const { return JUG_VelocitatSense; }
@@ -182,12 +191,12 @@ public:
 	double Porter_SurtAPerPilota() const { return POR_SurtAPerPilota; }
 	double Porter_Seguiment() const { return POR_Seguiment; }
 	double Porter_Reaccio() const { return POR_Reaccio; }
-	
+
 	// ------------------------------------------------------------------
-	
+
 	// El poso per fer proves, s'ha d'eliminar
-//	void Pinta(SDL_Surface *p) {};
-	
+	//	void Pinta(SDL_Surface *p) {};
+
 	void BuscaAjuda();
 };
 

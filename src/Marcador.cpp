@@ -47,16 +47,24 @@ void Marcador::HaMarcat(int costat)
 		Gols[costat]++;
 }
 
+std::string Marcador::ToString() {
+	std::string s = std::to_string(Gols[EQUIP_LOCAL]);
+	s.append(" - ");
+	s.append(std::to_string(Gols[EQUIP_VISITANT]));
+	return s;
+}
+
 void Marcador::Pinta(SDL_Surface *fons)
 {
-	char sGols[2];
+	std::string sGols;
 	SDL_Rect dest;
 	SDL_Surface *lletres;
 
 	// Pintar els resultats;
 	SDL_Color color = {255, 255, 255};
-	sprintf(sGols, "%d", Gols[EQUIP_LOCAL]);
-	lletres = TTF_RenderText_Solid(font, sGols, color);
+	// sprintf(sGols, "%d", Gols[EQUIP_LOCAL]);
+	sGols = std::to_string(Gols[EQUIP_LOCAL]);
+	lletres = TTF_RenderText_Solid(font, sGols.c_str(), color);
 	dest.x = 10;
 	dest.y = 0;
 	dest.w = lletres->h;
@@ -64,8 +72,8 @@ void Marcador::Pinta(SDL_Surface *fons)
 	SDL_BlitSurface(lletres, NULL, fons, &dest);
 	SDL_FreeSurface(lletres);
 	// Les lletres del visitant
-	sprintf(sGols, "%d", Gols[EQUIP_VISITANT]);
-	lletres = TTF_RenderText_Solid(font, sGols, color);
+	sGols = std::to_string(Gols[EQUIP_VISITANT]);
+	lletres = TTF_RenderText_Solid(font, sGols.c_str(), color);
 	dest.x = fons->w - lletres->w - 10;
 	dest.y = 0;
 	dest.w = lletres->h;

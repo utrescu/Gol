@@ -50,9 +50,7 @@ bool PorterEstatGlobal::OnMessage(Porter* keeper, const Missatge& mis)
 	{
 		case Msg_GoHome:
 		{
-#ifdef PORTER_STATE_INFO_ON
     	printf("..........Porter ha rebut peticio de tornar a casa %d\n", keeper->getID());
-#endif	
 			keeper->setTornaARegioInicial();
 			keeper->getFSM()->canviaEstat(PorterEstatTornaACasa::Instance());
 		}
@@ -60,9 +58,7 @@ bool PorterEstatGlobal::OnMessage(Porter* keeper, const Missatge& mis)
 
 		case Msg_ReceiveBall:
 		{
-#ifdef PORTER_STATE_INFO_ON
     	printf("..........Porter %d ha rebut peticio d'anar a per la pilota\n", keeper->getID());
-#endif				
 			keeper->getFSM()->canviaEstat(PorterEstatIntercepta::Instance());
 		}
 		break;
@@ -85,9 +81,8 @@ void PorterEstatCobrirPorteria::Enter(Porter* keeper)
 	keeper->getComportament()->InterposeOn(keeper->Porter_Seguiment());
 	// Aquest sera l'objectiu
 	keeper->getComportament()->setTarget(keeper->GetRearInterposeTarget());
-#ifdef PORTER_STATE_INFO_ON
      	printf("Porter %d vegila la pilota\n", keeper->getID());
-#endif
+
 };
 
 void PorterEstatCobrirPorteria::Execute(Porter* keeper)
@@ -135,9 +130,8 @@ PorterEstatTornaACasa* PorterEstatTornaACasa::Instance()
 void PorterEstatTornaACasa::Enter(Porter* keeper)
 {
 	keeper->getComportament()->ArriveOn();	
-#ifdef PORTER_STATE_INFO_ON
      	printf("Porter %d torna a casa\n", keeper->getID());
-#endif
+
 };
 
 void PorterEstatTornaACasa::Execute(Porter* keeper)
@@ -149,9 +143,8 @@ void PorterEstatTornaACasa::Execute(Porter* keeper)
 		 && keeper->getCamp()->isGol()==false)
 	{
 		keeper->getFSM()->canviaEstat(PorterEstatCobrirPorteria::Instance());
-#ifdef PORTER_STATE_INFO_ON
      		printf("... PORTER %d Passa a cobrir per: ( Casa(%d) o NoPossessio(%d) ) i gol(%d)==false\n", keeper->getID(), keeper->isACasa(), !keeper->getEquip()->TincPilota(),keeper->getCamp()->isGol() );
-#endif
+
 	}	
 };
 
@@ -170,9 +163,8 @@ PorterEstatIntercepta* PorterEstatIntercepta::Instance()
 void PorterEstatIntercepta::Enter(Porter* keeper)
 {
 	keeper->getComportament()->PursuitOn();
-#ifdef PORTER_STATE_INFO_ON
      		printf("PORTER %d vol interceptar la pilota\n", keeper->getID());
-#endif
+
 };
 
 void PorterEstatIntercepta::Execute(Porter* keeper)
@@ -181,9 +173,7 @@ void PorterEstatIntercepta::Execute(Porter* keeper)
 	// menys que sigui el que esta mes a prop de la pilota
 	if ((keeper->isMassaLlunyDeLaPorteria() && !keeper->isElMesProperDelCampAPilota()) || keeper->isForaDelCamp())
 	{
-#ifdef PORTER_STATE_INFO_ON
      		printf("... PORTER %d Torna per: lluny(%d) i NoMesProper(%d) o fora(%d)\n", keeper->getID(), keeper->isMassaLlunyDeLaPorteria(), !keeper->isElMesProperDelCampAPilota(),keeper->isForaDelCamp() );
-#endif
 		keeper->getFSM()->canviaEstat(PorterEstatTornaACasa::Instance());
 		return;
 	}
@@ -219,9 +209,7 @@ void PorterEstatXuta::Enter(Porter* keeper)
 	//envia tothom cap a casa 
 	keeper->getEquip()->getContraris()->TothomACasa();
 	keeper->getEquip()->TothomACasa();
-#ifdef PORTER_STATE_INFO_ON
      	printf("Porter %d vol xutar\n", keeper->getID());
-#endif
 };
 
 void PorterEstatXuta::Execute(Porter* keeper)
@@ -233,9 +221,7 @@ void PorterEstatXuta::Execute(Porter* keeper)
 	if (keeper->getEquip()->BuscaPassada(keeper, receiver, BallTarget, keeper->Jugador_ForcaPassada(),
 	                                     keeper->Jugador_DistanciaMinimaPassada()))
 	{
-#ifdef PORTER_STATE_INFO_ON
     	printf("..........Porter %d passa pilota a (%f,%f)\n", keeper->getID(), BallTarget.x, BallTarget.y);
-#endif	
     	// Fer la passada
 		double power = keeper->getPilota()->ForcaPerMoure(BallTarget, keeper->Jugador_ForcaPassada());
 		
@@ -259,9 +245,7 @@ void PorterEstatXuta::Execute(Porter* keeper)
 		// 1. Demana als defenses que baixin perquè són massa lluny
 		// 2. Xuta endavant i que sigui el que déu vulgui...
 		// keeper->getEquip()->CridaElsDefenses();
-#ifdef PORTER_STATE_INFO_ON
     	printf("..........PORTER %d allunya pilota\n", keeper->getID());
-#endif	
 
 		keeper->getCamp()->setLaTeElPorter(false); 
 		// ---- Per fer que xuti enlaire poso valor a 'h'

@@ -28,12 +28,12 @@
 
 #include <SDL/SDL_ttf.h>
 
-Jugador::Jugador(const char *fitxerimatge, const char *nom, Equip *nos, SDL_Rect casa,
+Jugador::Jugador(const char *fitxerimatge, const char *nom, Equip *nos, Regio casa,
 				 Estat<Jugador> *estatinicial, Punt3 mirant, double radi,
 				 Punt3 velocitat, double massa, double maxforce, double maxspeedsense, double maxspeedamb,
 				 double maxgir, double xut, double punteria, double provaxut, double passades, double zconf,
 				 double dista, double espera, double dribling, jugo_de paper,
-				 double Escala, int anima) : JugadorBase(nos, casa, mirant, radi, velocitat, massa, maxforce,
+				 double Escala, int anima) : JugadorBase(nos, nom, casa, mirant, radi, velocitat, massa, maxforce,
 														 maxspeedsense, maxspeedamb, maxgir, xut, punteria,
 														 provaxut, passades, zconf, dista, espera, dribling, paper)
 {

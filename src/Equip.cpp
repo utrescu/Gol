@@ -295,6 +295,7 @@ void Equip::Pinta(SDL_Surface *p)
 // Passa tots els jugadors a posicions d'atac
 void Equip::PassarAPosicionsAtacants()
 {
+	printf("ENTRENADOR %d: Ataqueu!\n", Soc);
 	int i = 0;
 	std::vector<JugadorBase *>::const_iterator it = Jugadors.begin();
 	for (it; it != Jugadors.end(); ++it)
@@ -307,6 +308,7 @@ void Equip::PassarAPosicionsAtacants()
 // Passa tots els jugadors a posicions de defensa
 void Equip::PassarAPosicionsDefensives()
 {
+	printf("ENTRENADOR %d: a defensar!\n", Soc);
 	int i = 0;
 	std::vector<JugadorBase *>::const_iterator it = Jugadors.begin();
 	for (it; it != Jugadors.end(); ++it)
@@ -385,6 +387,7 @@ bool Equip::isHiHaOponentADistancia(Punt3 pos, double radi)
 // Normalment serà perquè s'ha allunyat massa de la porteria
 void Equip::PorterACasa() const
 {
+	printf("ENTRENADOR %d: Porter torna a la porteria!\n", Soc);
 	//	PassarAPosicionsDefensives();
 
 	std::vector<JugadorBase *>::const_iterator it = Jugadors.begin();
@@ -408,6 +411,7 @@ void Equip::PorterACasa() const
 void Equip::TothomACasa() const
 {
 	//	PassarAPosicionsDefensives();
+	printf("ENTRENADOR %d: Tothom a casa!\n", Soc);
 
 	std::vector<JugadorBase *>::const_iterator it = Jugadors.begin();
 	for (it; it != Jugadors.end(); ++it)
@@ -487,6 +491,7 @@ void Equip::PilotaForaBanda()
 	}
 	else
 	{
+		printf("ENTRENADOR %d: Fora! Saquem nosaltres!\n", Soc);
 		// Avisar al jugador més proper a la pilota perquè vagi a
 		// buscar-la
 		Carter->DispatchMsg(SEND_MSG_IMMEDIATELY,
@@ -499,6 +504,7 @@ void Equip::PilotaForaBanda()
 
 void Equip::HemMarcat() const
 {
+	printf("ENTRENADOR %d: GOL! GOL! GOL!\n", Soc);
 	/*
 	std::vector<JugadorBase*>::const_iterator it = Jugadors.begin();
 
@@ -513,7 +519,7 @@ void Equip::HemMarcat() const
 					    Msg_Gol,
 					    NULL);
 		}
-	}	
+	}
 */
 }
 
@@ -561,6 +567,7 @@ void Equip::CanviaObjectiusDelsAturats()
 
 void Equip::CridaElsDefenses()
 {
+	printf("ENTRENADOR %d: Defenses atents!\n", Soc);
 	/*
 	std::vector<JugadorBase*>::const_iterator it = Jugadors.begin();
 
@@ -591,7 +598,7 @@ JugadorBase *Equip::getJugadorPerID(int id) const
 	return NULL;
 }
 
-void Equip::setPosicioNormal(int plyr, SDL_Rect region) const
+void Equip::setPosicioNormal(int plyr, Regio region) const
 {
 	// assert ( (plyr>=0) && (plyr<m_Players.size()) );
 	Jugadors[plyr]->setRegioNormal(region); // SetHomeRegion(region);
@@ -607,6 +614,7 @@ void Equip::DemanaPassada(JugadorBase *player)
 									 player,
 									 player->Jugador_ForcaPassada()))
 	{
+		printf("ENTRENADOR %d: %s Centra!\n", Soc, JugadorAmbLaPilota->NomJugador.c_str());
 		//tell the player to make the pass
 		//let the receiver know a pass is coming
 		Carter->DispatchMsg(SEND_MSG_IMMEDIATELY,

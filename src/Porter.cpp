@@ -22,12 +22,12 @@
 #include "general.h"
 #include "Renderator.h"
 
-Porter::Porter(const char *fitxerimatge, const char *nom, Equip *nos, SDL_Rect casa,
+Porter::Porter(const char *fitxerimatge, const char *nom, Equip *nos, Regio casa,
 			   Estat<Porter> *estatinicial, Punt3 mirant, double radi, Punt3 velocitat, double massa,
 			   double maxforce, double maxvelocamb, double maxvelocsense, double maxgir, double xut,
 			   double punteria, double provaxut, double passades, double zconf, double dista, double espera,
 			   double dribling, double surt, double segueix, double reaccio, double agafa, jugo_de paper,
-			   double Escala, int anima) : JugadorBase(nos, casa, mirant, radi, velocitat, massa,
+			   double Escala, int anima) : JugadorBase(nos, nom, casa, mirant, radi, velocitat, massa,
 													   maxforce, maxvelocamb, maxvelocsense, maxgir,
 													   xut, punteria, provaxut, passades, zconf,
 													   dista, espera, dribling, paper)
@@ -198,12 +198,14 @@ bool Porter::isForaDelCamp() const
 // Ens retorna si ha de sortir a buscar la pilota
 bool Porter::isAbastDeIntercepcio() const
 {
+
 	return (VectorDistanciaSq(getEquip()->getPorteriaNostra()->getMig(), getPilota()->getPosicio()) <= Porter_SurtAPerPilota());
 }
 
 // Dóna si el porter està massa lluny de la porteria i per tant ha de tornar
 bool Porter::isMassaLlunyDeLaPorteria() const
 {
+
 	return (VectorDistanciaSq(getPosicio(), GetRearInterposeTarget()) > Porter_SurtAPerPilota());
 };
 

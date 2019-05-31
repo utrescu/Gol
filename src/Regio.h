@@ -39,7 +39,7 @@ public:
     };
 
 private:
-    SDL_Rect regio;
+
     Punt3 PuntMig;
 
     int ID;
@@ -47,20 +47,26 @@ private:
     Punt3 CalculaPuntMig();
 
 public:
+    int x;
+        int y;
+        int w;
+        int h;
+
     Regio();
     Regio(int id, SDL_Rect reg);
+    Regio(int id, Regio reg);
     Regio(int id, int ax, int ay, int aw, int ah);
     ~Regio();
 
     int getID() { return ID; }
-    SDL_Rect getRectangle() { return regio; }
-    int getAltura() const { return regio.h; }
-    int getAmplada() const { return regio.w; }
+    SDL_Rect getRectangle();
+    int getAltura() const { return h; }
+    int getAmplada() const { return w; }
 
-    int getMinX() const { return regio.x; }
-    int getMaxX() const { return regio.x + regio.w; }
-    int getMinY() const { return regio.y; }
-    int getMaxY() const { return regio.y + regio.h; }
+    int getMinX() const { return x; }
+    int getMaxX() const { return x + w; }
+    int getMinY() const { return y; }
+    int getMaxY() const { return y + h; }
 
     Punt3 getPuntMig() { return PuntMig; }
 
@@ -68,40 +74,40 @@ public:
     {
         if (r == normal)
         {
-            return ((pos.x > regio.x) && (pos.x < regio.x + regio.w) &&
-                    (pos.y > regio.y) && (pos.y < regio.y + regio.h));
+            return ((pos.x > x) && (pos.x < x + w) &&
+                    (pos.y > y) && (pos.y < y + h));
         }
         else
         {
-            const double marginX = regio.w * 0.25;
-            const double marginY = regio.h * 0.25;
+            const double marginX = w * 0.25;
+            const double marginY = h * 0.25;
 
-            return ((pos.x > (regio.x + marginX)) && (pos.x < (regio.x + regio.w - marginX)) &&
-                    (pos.y > (regio.y + marginY)) && (pos.y < (regio.y + regio.h - marginY)));
+            return ((pos.x > (x + marginX)) && (pos.x < (x + w - marginX)) &&
+                    (pos.y > (y + marginY)) && (pos.y < (y + h - marginY)));
         }
     }
 
     inline bool isDins(Punt3 pos) const
     {
-        return ((pos.x > regio.x) && (pos.x < regio.x + regio.w) &&
-                (pos.y > regio.y) && (pos.y < regio.y + regio.h));
+        return ((pos.x > x) && (pos.x < x + w) &&
+                (pos.y > y) && (pos.y < y + h));
     }
     inline bool isDins(SDL_Rect pos) const
     {
-        return ((pos.x > regio.x) && (pos.x + pos.w < regio.x + regio.w) &&
-                (pos.y > regio.y) && (pos.y + pos.h < regio.y + regio.h));
+        return ((pos.x > x) && (pos.x + pos.w < x + w) &&
+                (pos.y > y) && (pos.y + pos.h < y + h));
     }
 
     inline bool isFora(SDL_Rect pos) const
     {
-        return ((pos.x + pos.w < regio.x) || (pos.x > regio.x + regio.w) ||
-                (pos.y + pos.h < regio.y) || (pos.y > regio.y + regio.h));
+        return ((pos.x + pos.w < x) || (pos.x > x + w) ||
+                (pos.y + pos.h < y) || (pos.y > y + h));
     }
 
     inline bool isFora(Punt3 pos) const
     {
-        return ((pos.x < regio.x) || (pos.x > regio.x + regio.w) ||
-                (pos.y < regio.y) || (pos.y > regio.y + regio.h));
+        return ((pos.x < x) || (pos.x > x + w) ||
+                (pos.y < y) || (pos.y > y + h));
     }
 
     inline Punt3 getPosicioAleatoria() const;

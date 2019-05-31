@@ -22,25 +22,37 @@
 
 Regio::Regio()
 {
-	regio.x= 0;
-	regio.y=0;
-	regio.w=0;
-	regio.h=0;
+	x = 0;
+	y = 0;
+	w = 0;
+	h = 0;
+	PuntMig = CalculaPuntMig();
+}
+
+Regio::Regio(int id, Regio rec): ID(id)
+{
+	x = rec.x;
+	y = rec.y;
+	h = rec.h;
+	w = rec.w;
 	PuntMig = CalculaPuntMig();
 }
 
 Regio::Regio(int id, SDL_Rect rec): ID(id)
 {
-	regio = rec;
+	x = rec.x;
+	y = rec.y;
+	h = rec.h;
+	w = rec.w;
 	PuntMig = CalculaPuntMig();
 }
 
 Regio::Regio(int id, int ax, int ay, int aw, int ah): ID(id)
 {
-	regio.x = ax;
-	regio.y = ay;
-	regio.w = aw;
-	regio.h = ah;
+	x = ax;
+	y = ay;
+	w = aw;
+	h = ah;
 	PuntMig = CalculaPuntMig();
 }
 
@@ -48,15 +60,24 @@ Regio::~Regio()
 {
 }
 
+SDL_Rect Regio::getRectangle() {
+	SDL_Rect r;
+	r.x = x;
+	r.y = y;
+	r.w = w;
+	r.h = h;
+	return r;
+}
+
 Punt3 Regio::CalculaPuntMig()
 {
-	PuntMig.x = regio.x + regio.w*0.5;
-	PuntMig.y = regio.y + regio.h*0.5;
+	PuntMig.x = x + w*0.5;
+	PuntMig.y = y + h*0.5;
 	PuntMig.h = 0;
 	return PuntMig;
 }
 
 inline Punt3 Regio::getPosicioAleatoria() const
 {
-	return Punt3(regio.x + rand()%regio.w, regio.y + rand()%regio.h, 0.0);
+	return Punt3(x + rand()%w, y + rand()%h, 0.0);
 }

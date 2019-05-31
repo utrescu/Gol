@@ -74,8 +74,8 @@ private:
 
 	//punter als jugadors de l'equip
 	std::vector<JugadorBase *> Jugadors;
-	SDL_Rect PosicionsAtacants[11];
-	SDL_Rect PosicionsDefensives[11];
+	Regio PosicionsAtacants[11];
+	Regio PosicionsDefensives[11];
 
 	// El camp
 	Pantalla *Camp;
@@ -186,7 +186,7 @@ public:
 	JugadorBase *getJugadorDeRecepcio() const { return JugadorDeRecepcio; }
 	void setJugadorDeRecepcio(JugadorBase *player) { JugadorDeRecepcio = player; }
 
-	void setPosicioNormal(int plyr, SDL_Rect region) const;
+	void setPosicioNormal(int plyr, Regio region) const;
 	void PassarAPosicionsAtacants();
 	void PassarAPosicionsDefensives();
 

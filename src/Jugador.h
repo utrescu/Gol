@@ -42,8 +42,7 @@ enum Jugador_Moviments
 class Jugador : public JugadorBase
 {
 private:
-	std::string NomJugador;
-	// --- EntitatRepresentacio ---
+		// --- EntitatRepresentacio ---
 	// SDL_Surface *Imatge;
 	SDL_Surface *Peu;
 	SDL_Surface *Peu2;
@@ -68,7 +67,7 @@ private:
 	Regulator *LimitadorXuts;
 
 public:
-	Jugador(const char *fitxerimatge, const char *nom, Equip *nos, SDL_Rect casa, Estat<Jugador> *estatinicial,
+	Jugador(const char *fitxerimatge, const char *nom, Equip *nos, Regio casa, Estat<Jugador> *estatinicial,
 			Punt3 Mirant, double radi, Punt3 Velocitat, double massa, double maxforce, double maxspeedsense,
 			double maxspeedamb, double maxgir, double xut, double punteria, double provaxut, double passades,
 			double zconf, double dista, double espera, double dribling, jugo_de paper, double Escala, int anima);
