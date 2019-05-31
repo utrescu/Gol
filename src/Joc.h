@@ -21,6 +21,7 @@
 
 #include <SDL/SDL_framerate.h>
 #include "Pantalla.h"
+#include "filepath.h"
 
 class Joc
 {

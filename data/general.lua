@@ -1,5 +1,4 @@
 -- Resolucio de la pantalla
--- Resolucio = { x = 800, y = 600, colors = 32 }
 Resolucio = { x = 640, y = 480, colors = 32 }
 -- Pantalla sencera 1:si, 0:no
 PantallaSencera  = 0

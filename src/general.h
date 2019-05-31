@@ -28,6 +28,8 @@
 #include <stdlib.h>
 #include <limits>
 #include "punt3.h"
+#include <string>
+#include "filepath.h"
 
 // ------------------- ALEATORIETAT --------------------------------
 inline double RandFloat() { return ((rand()) / (RAND_MAX + 1.0)); }
@@ -182,11 +184,12 @@ inline bool IntersectRect(SDL_Rect *dest, const SDL_Rect *src1, const SDL_Rect *
 
 inline SDL_Surface *EscalaImatge(const char *nom, double Escala)
 {
+
     SDL_Surface *Imatge2 = NULL, *On = NULL;
 
     if (Escala != 1.0)
     {
-        Imatge2 = IMG_Load(nom);
+        Imatge2 = IMG_Load(getFullFileName(nom).c_str());
         SDL_SetColorKey(Imatge2, SDL_SRCCOLORKEY, SDL_MapRGB(Imatge2->format, 255, 255, 255));
         // On = zoomSurface(Imatge2,Escala,Escala,0);
         On = zoomSurface(Imatge2, Escala, Escala, 1);
@@ -194,7 +197,7 @@ inline SDL_Surface *EscalaImatge(const char *nom, double Escala)
     }
     else
     {
-        On = IMG_Load(nom);
+        On = IMG_Load(getFullFileName(nom).c_str());
     }
     SDL_SetColorKey(On, SDL_SRCCOLORKEY, SDL_MapRGB(On->format, 255, 255, 255));
     return On;

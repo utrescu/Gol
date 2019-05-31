@@ -1,19 +1,19 @@
 #include "LUAManager.h"
+#include <string.h>
 
 LUAManager::LUAManager(const char *fitxer)
 {
 	int error;
 
 	pL = luaL_newstate();
-	luaopen_base(pL);
-	luaopen_string(pL);
-	luaopen_table(pL);
-	luaopen_math(pL);
-	luaopen_io(pL);
+	luaL_openlibs(pL);
+
 	// Carrega i compila el fitxer LUA
-	if ((error = luaL_dofile(pL, fitxer)) != 0)
+	if ((error = luaL_dofile(pL, getFullFileName(fitxer).c_str())) != 0)
 	{
-		// std::cout << "Error " << error << ": Problemes amb el fitxer de LUA" << endl;
+		printf("Error %d: Problemes amb el fitxer de LUA\n", error);
+		printf("Error: %s", lua_tostring(pL, -1));
+		exit(-1);
 	}
 }
 
@@ -24,14 +24,14 @@ LUAManager::~LUAManager(void)
 
 std::string LUAManager::getCadena(const char *camp)
 {
-	// Mirar que la pila est�en blanc
+	// Mirar que la pila està en blanc
 	lua_settop(pL, 0);
 	// Carregar la variable a la pila
 	lua_getglobal(pL, camp);
 	// Comprovar que coincideix el tipus
 	if (!lua_isstring(pL, 1))
 	{
-		//	cout << "ERROR: Tipus inv�id\n" << endl;
+		//	cout << "ERROR: Tipus invàlid\n" << endl;
 		return "";
 	}
 	// Obtenir el valor de la cadena
@@ -48,15 +48,15 @@ std::string LUAManager::getTaulaCadena(const char *camp, const char *element)
 	lua_settop(pL, 0);
 	// Posar la variable demanada a la pila
 	lua_getglobal(pL, camp);
-	// Comprovar que el tipus � correcte  (comencen per 1 )
+	// Comprovar que el tipus és correcte  (comencen per 1 )
 	if (!lua_istable(pL, 1))
 	{
-		// cout << "ERROR: Tipus inv�id\n" << endl;
+		// cout << "ERROR: Tipus invàid\n" << endl;
 		return "";
 	}
 	else
 	{
-		// Entrar l'�dex de l'element
+		// Entrar l'índex de l'element
 		lua_pushstring(pL, element);
 		// Canviar el nom pel valor de la taula
 		lua_gettable(pL, -2);
@@ -83,7 +83,7 @@ int LUAManager::getNumeroint(const char *camp)
 	// Comprovar que el tipus és correcte  (comencen per 1 )
 	if (!lua_isnumber(pL, 1))
 	{
-		// cout << "ERROR: Tipus invàlid\n" << endl;
+		printf("ERROR: Tipus invàlid %s\n", camp);
 		return -1;
 	}
 
@@ -103,7 +103,7 @@ float LUAManager::getNumerofloat(const char *camp)
 	// Comprovar que el tipus és correcte  (comencen per 1 )
 	if (!lua_isnumber(pL, 1))
 	{
-		// cout << "ERROR: Tipus invàlid\n" << endl;
+		printf("ERROR: Tipus invàlid %s\n", camp);
 		return -1;
 	}
 
@@ -120,10 +120,11 @@ int LUAManager::getTaulaNumeroint(const char *camp, const char *element)
 	lua_settop(pL, 0);
 	// Posar la variable demanada a la pila
 	lua_getglobal(pL, camp);
+
 	// Comprovar que el tipus és correcte  (comencen per 1 )
 	if (!lua_istable(pL, 1))
 	{
-		// cout << "ERROR: Tipus invàlid\n" << endl;
+		printf("ERROR: Tipus invàlid %s\n", camp);
 		return -1;
 	}
 	else
@@ -134,7 +135,8 @@ int LUAManager::getTaulaNumeroint(const char *camp, const char *element)
 		lua_gettable(pL, -2);
 		if (!lua_isnumber(pL, -1))
 		{
-			return -1;
+			printf("ERROR: No és un número\n");
+			return -3;
 		}
 		// Obtenir el valor de la taula
 		int val = (int)lua_tonumber(pL, -1);
@@ -155,7 +157,7 @@ float LUAManager::getTaulaNumerofloat(const char *camp, const char *element)
 	// Comprovar que el tipus és correcte  (comencen per 1 )
 	if (!lua_istable(pL, 1))
 	{
-		// cout << "ERROR: Tipus invàlid\n" << endl;
+		printf("ERROR: Tipus invàlid %s\n", camp);
 		return -1;
 	}
 	else

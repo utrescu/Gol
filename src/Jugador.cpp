@@ -28,15 +28,14 @@
 
 #include <SDL/SDL_ttf.h>
 
-
-Jugador::Jugador(const char* fitxerimatge, const char* nom, Equip* nos, SDL_Rect casa, 
-				 Estat<Jugador>* estatinicial, Punt3 mirant, double radi, 
-		         Punt3 velocitat, double massa, double maxforce, double maxspeedsense, double maxspeedamb,
-		         double maxgir, double xut, double punteria, double provaxut, double passades, double zconf, 
-				 double dista, double espera, double dribling, jugo_de paper, 
-			double Escala, int anima): JugadorBase(nos, casa, mirant, radi, velocitat, massa, maxforce, 
-				                    maxspeedsense, maxspeedamb, maxgir, xut, punteria, 
-						    provaxut, passades, zconf, dista, espera, dribling, paper)
+Jugador::Jugador(const char *fitxerimatge, const char *nom, Equip *nos, SDL_Rect casa,
+				 Estat<Jugador> *estatinicial, Punt3 mirant, double radi,
+				 Punt3 velocitat, double massa, double maxforce, double maxspeedsense, double maxspeedamb,
+				 double maxgir, double xut, double punteria, double provaxut, double passades, double zconf,
+				 double dista, double espera, double dribling, jugo_de paper,
+				 double Escala, int anima) : JugadorBase(nos, casa, mirant, radi, velocitat, massa, maxforce,
+														 maxspeedsense, maxspeedamb, maxgir, xut, punteria,
+														 provaxut, passades, zconf, dista, espera, dribling, paper)
 {
 	char sNumero[3];
 
@@ -44,35 +43,39 @@ Jugador::Jugador(const char* fitxerimatge, const char* nom, Equip* nos, SDL_Rect
 
 	NomJugador = nom;
 
-	// Abast Rebre 
+	// Abast Rebre
 	JUG_DistanciaRecepcio = 132 * 132 * getCamp()->getZoomX(); // * Escala;
 
 	// --------------- GRAFICS -----------------------------------------------------
+
 	Peu = EscalaImatge("jugador-ombra.png", Escala);
 	Peu2 = EscalaImatge("jugador-ombra2.png", Escala);
+
 	// Crear l'array d'animacions per cada moviment disponible
 	Moviments = new Animacio[anima];
 	// Carregar els diferents moviments
-	for(int j=0; j<anima; j++)
+	for (int j = 0; j < anima; j++)
 	{
-		Moviments[j].load((char*)fitxerimatge,j);
+		Moviments[j].load((char *)fitxerimatge, j);
 		Moviments[j].setEscala(Escala);
 	}
-	
+
 	MovimentActual = JUGADORCORRE;
 	// número del jugador
 	// Per mostrar el número de jugador
-	TTF_Font *font = TTF_OpenFont("./start.ttf",20*Escala);
-	if(!font) 
+	TTF_Font *font = TTF_OpenFont(getFullFileName("start.ttf").c_str(), 20 * Escala);
+	if (!font)
 	{
 		printf("TTF_OpenFont: %s\n", TTF_GetError());
+		exit(-1);
 	}
-	SDL_Color color={125,125,125};
-	sprintf(sNumero,"%d",getID());
-	Numero=TTF_RenderText_Solid(font,sNumero,color);	
-	
-	if (font!=NULL) TTF_CloseFont(font);
-	font=NULL;
+	SDL_Color color = {125, 125, 125};
+	sprintf(sNumero, "%d", getID());
+	Numero = TTF_RenderText_Solid(font, sNumero, color);
+
+	if (font != NULL)
+		TTF_CloseFont(font);
+	font = NULL;
 	// ----------------- Iniciar variables diverses  -------------------------
 
 	// AlturaJugador = 90 * Escala;
@@ -80,12 +83,11 @@ Jugador::Jugador(const char* fitxerimatge, const char* nom, Equip* nos, SDL_Rect
 	AlturaJugador = Moviments[MovimentActual].getAltura();
 	AmpladaJugador = Moviments[MovimentActual].getAmplada();
 	Altura = AlturaJugador;
-	setRadi(AmpladaJugador*0.5);
-	
-	// Pilota a l'abast de xutar ... 
-	JUG_PilotaAbastXut = 900*Escala;
-	JUG_PilotaAbastDesti = 1500*Escala;
+	setRadi(AmpladaJugador * 0.5);
 
+	// Pilota a l'abast de xutar ...
+	JUG_PilotaAbastXut = 900 * Escala;
+	JUG_PilotaAbastDesti = 1500 * Escala;
 
 	// ------------ MAQUINA D'ESTATS --------------------------------------------------------------
 	maquinaEstats = new MaquinaEstats<Jugador>(this);
@@ -94,29 +96,28 @@ Jugador::Jugador(const char* fitxerimatge, const char* nom, Equip* nos, SDL_Rect
 		maquinaEstats->setEstatActual(estatinicial);
 
 		if (estatinicial)
-		{    
+		{
 			maquinaEstats->setEstatActual(estatinicial);
 			maquinaEstats->setEstatAnterior(estatinicial);
 			maquinaEstats->setEstatGlobal(JugadorEstatGlobal::Instance());
 
 			maquinaEstats->getEstatActual()->Enter(this);
-		}    
+		}
 
 		ComportamentJugador->SeparationOn();
 	}
-	LimitadorXuts = new Regulator(FREQUENCIAXUTSPERSEGON);	
+	LimitadorXuts = new Regulator(FREQUENCIAXUTSPERSEGON);
 }
-
 
 Jugador::~Jugador()
 {
 	SDL_FreeSurface(Peu);
 	SDL_FreeSurface(Peu2);
-//	SDL_FreeSurface(Imatge);
+	//	SDL_FreeSurface(Imatge);
 	SDL_FreeSurface(Numero);
 	delete LimitadorXuts;
 	delete maquinaEstats;
-	delete [] Moviments;
+	delete[] Moviments;
 }
 
 bool Jugador::Mou(void)
@@ -124,26 +125,26 @@ bool Jugador::Mou(void)
 	//run the logic for the current state
 	maquinaEstats->Update();
 
-    //calculate the combined steering force
+	//calculate the combined steering force
 	ComportamentJugador->Calculate();
 
-    // Si no fa força, decelerar el jugador
+	// Si no fa força, decelerar el jugador
 	if (ComportamentJugador->getForce().isZero())
 	{
-		const double BrakingRate = 0.8; 
+		const double BrakingRate = 0.8;
 		Velocitat = Velocitat * BrakingRate;
 	}
-  
-  	//the steering force's side component is a force that rotates the 
-  	//player about its axis. We must limit the rotation so that a player
-  	//can only turn by PlayerMaxTurnRate rads per update.
-	double TurningForce =   ComportamentJugador->SideComponent();
+
+	//the steering force's side component is a force that rotates the
+	//player about its axis. We must limit the rotation so that a player
+	//can only turn by PlayerMaxTurnRate rads per update.
+	double TurningForce = ComportamentJugador->SideComponent();
 	Clamp(TurningForce, -Jugador_MaxGir(), Jugador_MaxGir());
 
 	//rotate the heading vector
-	
+
 	VectorRodaPerOrigen(MirantA, TurningForce);
-	
+
 	//make sure the velocity vector points in the same direction as
 	//the heading vector
 	Velocitat = MirantA * Velocitat.Llargada();
@@ -163,13 +164,13 @@ bool Jugador::Mou(void)
 
 	//update the position
 	Lloc += Velocitat;
-	
+
 	//enforce a non-penetration constraint if desired
 	// if(Prm.bNonPenetrationConstraint)
 	// {
-    	EnforceNonPenetrationContraint(this, AutoList<JugadorBase>::GetAllMembers());
+	EnforceNonPenetrationContraint(this, AutoList<JugadorBase>::GetAllMembers());
 
-	// Posem el Z-Order: 
+	// Posem el Z-Order:
 	// setZOrder(getPosicioImatge().y + getPosicioImatge().h - RectJugador.h*0.2);
 	setZOrder(getPosicio().y);
 	// ---------------------   Miro si es veu...
@@ -177,7 +178,7 @@ bool Jugador::Mou(void)
 	SDL_Rect Visio = getCamp()->getZonaVisible();
 	orig = getPosicioImatge();
 	// Nomes el pinto si esta dins de la pantalla
-	if (IntersectRect(&dest,&orig,&Visio))
+	if (IntersectRect(&dest, &orig, &Visio))
 	{
 		Renderitza->Afegir(this);
 	}
@@ -185,26 +186,25 @@ bool Jugador::Mou(void)
 	return 0;
 }
 
-
-bool Jugador::RebreMissatge(const Missatge& msg)
+bool Jugador::RebreMissatge(const Missatge &msg)
 {
 	return maquinaEstats->capturaMissatge(msg);
 };
 
 void Jugador::Pinta(SDL_Surface *Fons)
 {
-	
+
 	SDL_Rect QuinaImatge;
-	int MovimentImatgeY=0;
-	
+	int MovimentImatgeY = 0;
+
 	SDL_Rect Visio = getCamp()->getZonaVisible();
 
 	// Si el criden, està dins de la pantalla
-	SDL_Rect PosSprite=getPosicioImatge();
+	SDL_Rect PosSprite = getPosicioImatge();
 	PosSprite.x -= Visio.x;
 	PosSprite.y -= Visio.y;
 	// Pinta la ombra
-	if (Nosaltres->getJugadorAmbLaPilota()==this)
+	if (Nosaltres->getJugadorAmbLaPilota() == this)
 	{
 		SDL_BlitSurface(Peu2, 0, Fons, &PosSprite);
 	}
@@ -212,53 +212,54 @@ void Jugador::Pinta(SDL_Surface *Fons)
 	{
 		SDL_BlitSurface(Peu, 0, Fons, &PosSprite);
 	}
-		
+
 	PosSprite.y -= PosSprite.h;
-	SDL_BlitSurface(Numero,0,Fons,&PosSprite);
-	// Pintar el tio 
-	
-	RectJugador.y = getPosicioImatge().y - RectJugador.h*0.8;
-	RectJugador.x = getPosicioImatge().x - (PosSprite.w - RectJugador.w)*0.2;
+	SDL_BlitSurface(Numero, 0, Fons, &PosSprite);
+	// Pintar el tio
+
+	RectJugador.y = getPosicioImatge().y - RectJugador.h * 0.8;
+	RectJugador.x = getPosicioImatge().x - (PosSprite.w - RectJugador.w) * 0.2;
 	RectJugador.x -= Visio.x;
 	RectJugador.y -= Visio.y;
-	
+
 	// Aquests dos em penso que els ignorarà i de fet
 	// amb la classe Animació ja no em fan falta
 	RectJugador.h = AlturaJugador;
 	RectJugador.w = AmpladaJugador;
-				
+
 	// ------------- EN QUINA DIRECCIO ESTA MIRANT? --------
-	Punt3 temp(1.0,0.0,0.0);
-	
+	Punt3 temp(1.0, 0.0, 0.0);
+
 	double producte = temp.Dot(MirantA);
 
 	// PERQUE a vegades dóna -1.000000095
 	if (producte < -1)
 	{
-		producte = -1; 
+		producte = -1;
 	}
-	double  angle = acos(producte);
-	
-	if (getMirant().y>0) angle = DOSPI - angle;
-	
+	double angle = acos(producte);
+
+	if (getMirant().y > 0)
+		angle = DOSPI - angle;
+
 	int tria = QUATREDIVPI * angle;
 
+	//	Amb la classe Animacio només hauria de caldre cridar-la perquè ja l'haurem
+	//	carregat correctament. Això implica que podem pintar tota la imatge directament
+	//	sense preocupar-nos de les dimensions
 
-//	Amb la classe Animacio només hauria de caldre cridar-la perquè ja l'haurem
-//	carregat correctament. Això implica que podem pintar tota la imatge directament
-//	sense preocupar-nos de les dimensions
-	
 	Moviments[MovimentActual].Avanca((Direccions)tria);
 	// Si està aturat no ha de moure's
-	if (getVelocitat()==0) Moviments[MovimentActual].stop();
+	if (getVelocitat() == 0)
+		Moviments[MovimentActual].stop();
 
 	SDL_BlitSurface(Moviments[MovimentActual].getImatge(), NULL, Fons, &RectJugador);
-	 
+
 	// Això si, els d'ajuda s'han de buscar la videta i canviar
 	// la variable MovimentActual, com ho ha de fer el xut
-	// 
+	//
 
-/*
+	/*
 	RetardMoviment++;
 	if (RetardMoviment==EsperaMoviment)
 	{
@@ -279,13 +280,13 @@ void Jugador::Pinta(SDL_Surface *Fons)
 	
 	SDL_BlitSurface(Imatge, &QuinaImatge, Fons, &RectJugador);
 */
-	
+
 	// ------------- ACABADA RECERCA IMATGE --------
-		// Un rectangle de DEBUG
-		// RectJugador.x = getPosicio().x - Visio.x;
-		// RectJugador.y = getPosicio().y - Visio.y;
-		// RectJugador.w = sqrt(PILOTAABASTREBRE);
-		// RectJugador.h = sqrt(PILOTAABASTREBRE);
-		
-		// SDL_FillRect(Fons, &RectJugador,(Uint32) 0xFF0000);	
+	// Un rectangle de DEBUG
+	// RectJugador.x = getPosicio().x - Visio.x;
+	// RectJugador.y = getPosicio().y - Visio.y;
+	// RectJugador.w = sqrt(PILOTAABASTREBRE);
+	// RectJugador.h = sqrt(PILOTAABASTREBRE);
+
+	// SDL_FillRect(Fons, &RectJugador,(Uint32) 0xFF0000);
 }

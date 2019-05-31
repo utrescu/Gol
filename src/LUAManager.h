@@ -8,6 +8,7 @@ extern "C"
 }
 
 #include <string>
+#include "filepath.h"
 
 class LUAManager
 {

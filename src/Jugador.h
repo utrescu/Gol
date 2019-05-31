@@ -25,8 +25,16 @@
 #include "Regulator.h"
 #include "Animacio.h"
 #include <string>
+#include "filepath.h"
 
-enum Jugador_Moviments { JUGADORCORRE=0, JUGADORAJUDA=1, JUGADORXUTA=2, JUGADORSALTA=3, JUGADORCAU=4 };
+enum Jugador_Moviments
+{
+	JUGADORCORRE = 0,
+	JUGADORAJUDA = 1,
+	JUGADORXUTA = 2,
+	JUGADORSALTA = 3,
+	JUGADORCAU = 4
+};
 
 /**
 	@author Xavier Sala <utrescu@xaviersala.net>
@@ -40,10 +48,10 @@ private:
 	SDL_Surface *Peu;
 	SDL_Surface *Peu2;
 	SDL_Surface *Numero;
-//	int QuinaImatgeToca;
-//	int QuinMovimentToca;
-//	int RetardMoviment;
-//	int EsperaMoviment;
+	//	int QuinaImatgeToca;
+	//	int QuinMovimentToca;
+	//	int RetardMoviment;
+	//	int EsperaMoviment;
 
 	// ---- Grafics ---------------
 	Animacio *Moviments;
@@ -55,14 +63,14 @@ private:
 	SDL_Rect RectJugador;
 
 	// ----------------------------
-	MaquinaEstats<Jugador>* maquinaEstats;
-	
-	Regulator* LimitadorXuts;
+	MaquinaEstats<Jugador> *maquinaEstats;
+
+	Regulator *LimitadorXuts;
 
 public:
-	Jugador(const char* fitxerimatge, const char* nom, Equip* nos, SDL_Rect casa, Estat<Jugador>* estatinicial, 
-		    Punt3 Mirant, double radi, Punt3 Velocitat, double massa, double maxforce, double maxspeedsense, 
-			double maxspeedamb, double maxgir, double xut, double punteria, double provaxut, double passades, 
+	Jugador(const char *fitxerimatge, const char *nom, Equip *nos, SDL_Rect casa, Estat<Jugador> *estatinicial,
+			Punt3 Mirant, double radi, Punt3 Velocitat, double massa, double maxforce, double maxspeedsense,
+			double maxspeedamb, double maxgir, double xut, double punteria, double provaxut, double passades,
 			double zconf, double dista, double espera, double dribling, jugo_de paper, double Escala, int anima);
 
 	~Jugador();
@@ -70,12 +78,12 @@ public:
 	bool Mou(void);
 	void Pinta(SDL_Surface *Fons);
 	void Pinta(SDL_Surface *Fons, SDL_Rect Visio){};
-		
-	bool RebreMissatge(const Missatge& msg);
-	MaquinaEstats<Jugador>* getFSM()const{return maquinaEstats;}
-	
-	bool PreparatPerTornarAXutar()const{return LimitadorXuts->isReady();}	
-	
+
+	bool RebreMissatge(const Missatge &msg);
+	MaquinaEstats<Jugador> *getFSM() const { return maquinaEstats; }
+
+	bool PreparatPerTornarAXutar() const { return LimitadorXuts->isReady(); }
+
 	void setMovimentActual(Jugador_Moviments ma) { MovimentActual = ma; }
 	Jugador_Moviments getMovimentActual() { return MovimentActual; }
 };

@@ -39,16 +39,16 @@
 #include "LUAManager.h"
 
 Equip::Equip(const char *nomfitxer, Porteria *nostra, Porteria *seva, Pantalla *pant, quin_equip costat,
-						 double Escala) : PorteriaContraria(seva),
-															PorteriaNostra(nostra),
-															Contraris(NULL),
-															Camp(pant),
-															Soc(costat),
-															DistanciaAlaPilotaDelMillor(0.0),
-															JugadorMesProperALaPilota(NULL),
-															JugadorAmbLaPilota(NULL),
-															JugadorDonantSuport(NULL),
-															JugadorDeRecepcio(NULL)
+			 double Escala) : PorteriaContraria(seva),
+							  PorteriaNostra(nostra),
+							  Contraris(NULL),
+							  Camp(pant),
+							  Soc(costat),
+							  DistanciaAlaPilotaDelMillor(0.0),
+							  JugadorMesProperALaPilota(NULL),
+							  JugadorAmbLaPilota(NULL),
+							  JugadorDonantSuport(NULL),
+							  JugadorDeRecepcio(NULL)
 {
 	// Iniciar la maquina d'estats
 	maquinaEstats = new MaquinaEstats<Equip>(this);
@@ -139,7 +139,7 @@ void Equip::CrearJugadors(const char *nomfitxer, double Escala)
 		double VelocitatSense = lm->getTaulaNumerofloat(taulajugador, "VelocitatSensePilota") * Escala;
 		double VelocitatAmb = lm->getTaulaNumerofloat(taulajugador, "VelocitatAmbPilota") * Escala;
 		// xuts
-		double xut = lm->getTaulaNumerofloat(taulajugador, "ForcaXut");			 // *Escala?
+		double xut = lm->getTaulaNumerofloat(taulajugador, "ForcaXut");		 // *Escala?
 		double punteria = lm->getTaulaNumerofloat(taulajugador, "Punteria"); // *Escala?
 		double provaxut = lm->getTaulaNumerofloat(taulajugador, "PossibleXutBoig");
 		// passades
@@ -175,62 +175,62 @@ void Equip::CrearJugadors(const char *nomfitxer, double Escala)
 			PosicionsAtacants[i].w = PosicionsDefensives[i].w;
 			PosicionsAtacants[i].h = PosicionsDefensives[i].h;
 
-			Jugadors.push_back(new Porter(Fitxer.c_str(),												 // Fitxer d'imatge
-																		Nom.c_str(),													 // Nom del jugador
-																		this,																	 // Equip del jugador
-																		PosicionsDefensives[i],								 // Posició d'inici
-																		PorterEstatCobrirPorteria::Instance(), // Estat inicial
-																		MiraCapA,															 // Quin és el seu costat
-																		0,																		 // Radi (no es fa servir encara)
-																		Punt3(0.0, 0.0, 0.0),									 // Velocitat inicial
-																		MassaCorporal,												 // Massa
-																		ForcaMaximum,													 // Força
-																		VelocitatSense,												 // Velocitat màxima sense pilota
-																		VelocitatAmb,													 // Velocitat màxima amb la pilota
-																		RotaMaximum,													 // Velocitat màxima de rotació
-																		xut,																	 // Forca màxima de xut
-																		punteria,															 // Punteria del jugador 0..1
-																		provaxut,															 // Provabilitat de xuts a la babala
-																		passada,															 // Forca passada
-																		zconf,																 // Zona confiança
-																		dista,																 // Distancia minima de passada
-																		espera,																 // provabilitat d'esperar o anar a per la pilota
-																		dribling,															 // Forca dribling
-																		surt,																	 // A quina distancia surt el porter
-																		segueix,															 // Seguiment pilota
-																		reaccio,															 // Reaccio del porter
-																		agafa,																 // Afagar la pilota (porter més bo!)
-																		JugadorBase::porter,									 // De que juga el jugador
-																		Escala,																 // Escalat de la imatge
-																		anim));																 // Quantes animacions té el jugador
+			Jugadors.push_back(new Porter(Fitxer.c_str(),						 // Fitxer d'imatge
+										  Nom.c_str(),							 // Nom del jugador
+										  this,									 // Equip del jugador
+										  PosicionsDefensives[i],				 // Posició d'inici
+										  PorterEstatCobrirPorteria::Instance(), // Estat inicial
+										  MiraCapA,								 // Quin és el seu costat
+										  0,									 // Radi (no es fa servir encara)
+										  Punt3(0.0, 0.0, 0.0),					 // Velocitat inicial
+										  MassaCorporal,						 // Massa
+										  ForcaMaximum,							 // Força
+										  VelocitatSense,						 // Velocitat màxima sense pilota
+										  VelocitatAmb,							 // Velocitat màxima amb la pilota
+										  RotaMaximum,							 // Velocitat màxima de rotació
+										  xut,									 // Forca màxima de xut
+										  punteria,								 // Punteria del jugador 0..1
+										  provaxut,								 // Provabilitat de xuts a la babala
+										  passada,								 // Forca passada
+										  zconf,								 // Zona confiança
+										  dista,								 // Distancia minima de passada
+										  espera,								 // provabilitat d'esperar o anar a per la pilota
+										  dribling,								 // Forca dribling
+										  surt,									 // A quina distancia surt el porter
+										  segueix,								 // Seguiment pilota
+										  reaccio,								 // Reaccio del porter
+										  agafa,								 // Afagar la pilota (porter més bo!)
+										  JugadorBase::porter,					 // De que juga el jugador
+										  Escala,								 // Escalat de la imatge
+										  anim));								 // Quantes animacions té el jugador
 		}
 		else
 		{
 			// És un jugador
-			Jugadors.push_back(new Jugador(Fitxer.c_str(),									 // Nom del fitxer d'imatge
-																		 Nom.c_str(),											 // Nom del jugador
-																		 this,														 // De quin equip soc
-																		 PosicionsDefensives[i],					 // Posicio per començar
-																		 JugadorEstatEsperant::Instance(), // Estat
-																		 MiraCapA,												 // Mirant
-																		 0,																 // radi
-																		 Punt3(0.0, 0.0, 0.0),						 // Velocitat
-																		 MassaCorporal,										 // Massa jugador
-																		 ForcaMaximum,										 // Força maxima
-																		 VelocitatSense,									 // Velocitat maxima sense pilota
-																		 VelocitatAmb,										 // Velocitat maxima amb pilota
-																		 RotaMaximum,											 // Velocitat de gir màxima
-																		 xut,															 // Forca xut
-																		 punteria,												 // Punteria del jugador 0..1
-																		 provaxut,												 // Provabilitat de xuts a la babala
-																		 passada,													 // Número de proves per xutar
-																		 zconf,														 // Zona confiança
-																		 dista,														 // Distancia minima de passada
-																		 espera,													 // provabilitat d'esperar o anar a per la pilota
-																		 dribling,												 // Forca dribling
-																		 (JugadorBase::jugo_de)quees,			 // De que juga el jugador
-																		 Escala,													 // Escala
-																		 anim));													 // Número d'animacions
+			Jugadors.push_back(new Jugador(Fitxer.c_str(),					 // Nom del fitxer d'imatge
+										   Nom.c_str(),						 // Nom del jugador
+										   this,							 // De quin equip soc
+										   PosicionsDefensives[i],			 // Posicio per començar
+										   JugadorEstatEsperant::Instance(), // Estat
+										   MiraCapA,						 // Mirant
+										   0,								 // radi
+										   Punt3(0.0, 0.0, 0.0),			 // Velocitat
+										   MassaCorporal,					 // Massa jugador
+										   ForcaMaximum,					 // Força maxima
+										   VelocitatSense,					 // Velocitat maxima sense pilota
+										   VelocitatAmb,					 // Velocitat maxima amb pilota
+										   RotaMaximum,						 // Velocitat de gir màxima
+										   xut,								 // Forca xut
+										   punteria,						 // Punteria del jugador 0..1
+										   provaxut,						 // Provabilitat de xuts a la babala
+										   passada,							 // Número de proves per xutar
+										   zconf,							 // Zona confiança
+										   dista,							 // Distancia minima de passada
+										   espera,							 // provabilitat d'esperar o anar a per la pilota
+										   dribling,						 // Forca dribling
+										   (JugadorBase::jugo_de)quees,		 // De que juga el jugador
+										   Escala,							 // Escala
+										   anim));							 // Número d'animacions
 		}
 	}
 
@@ -394,10 +394,10 @@ void Equip::PorterACasa() const
 		if ((*it)->getDeQueFaig() == JugadorBase::porter)
 		{
 			Carter->DispatchMsg(SEND_MSG_IMMEDIATELY,
-													1,
-													(*it)->getID(),
-													Msg_GoHome,
-													NULL);
+								1,
+								(*it)->getID(),
+								Msg_GoHome,
+								NULL);
 		}
 	}
 }
@@ -416,10 +416,10 @@ void Equip::TothomACasa() const
 		if ((*it)->getDeQueFaig() != JugadorBase::porter)
 		{
 			Carter->DispatchMsg(SEND_MSG_IMMEDIATELY,
-													1,
-													(*it)->getID(),
-													Msg_GoHome,
-													NULL);
+								1,
+								(*it)->getID(),
+								Msg_GoHome,
+								NULL);
 		}
 	}
 }
@@ -432,10 +432,10 @@ void Equip::SacaFalta()
 {
 	CalculaMesProperAPilota();
 	Carter->DispatchMsg(SEND_MSG_IMMEDIATELY,
-											1,
-											JugadorMesProperALaPilota->getID(),
-											Msg_AnarASaque,
-											NULL);
+						1,
+						JugadorMesProperALaPilota->getID(),
+						Msg_AnarASaque,
+						NULL);
 }
 
 void Equip::PilotaCorner()
@@ -490,10 +490,10 @@ void Equip::PilotaForaBanda()
 		// Avisar al jugador més proper a la pilota perquè vagi a
 		// buscar-la
 		Carter->DispatchMsg(SEND_MSG_IMMEDIATELY,
-												1,
-												JugadorMesProperALaPilota->getID(),
-												Msg_AnarASaque,
-												NULL);
+							1,
+							JugadorMesProperALaPilota->getID(),
+							Msg_AnarASaque,
+							NULL);
 	}
 }
 
@@ -550,7 +550,7 @@ void Equip::CanviaObjectiusDelsAturats()
 			Jugador *plyr = static_cast<Jugador *>(*it);
 
 			if (plyr->getFSM()->isEnEstat(*JugadorEstatEsperant::Instance()) ||
-					plyr->getFSM()->isEnEstat(*JugadorEstatTornaACasa::Instance()))
+				plyr->getFSM()->isEnEstat(*JugadorEstatTornaACasa::Instance()))
 			{
 				// plyr->getComportament()->setTarget(plyr->getRegioInicial()->getPuntMig());
 				plyr->getComportament()->setTarget(plyr->getRegioNormal()->getPuntMig());
@@ -603,22 +603,22 @@ void Equip::DemanaPassada(JugadorBase *player)
 		return;
 
 	if (isPassadaLliureTotsContraris(JugadorAmbLaPilota->getPosicio(),
-																	 player->getPosicio(),
-																	 player,
-																	 player->Jugador_ForcaPassada()))
+									 player->getPosicio(),
+									 player,
+									 player->Jugador_ForcaPassada()))
 	{
 		//tell the player to make the pass
 		//let the receiver know a pass is coming
 		Carter->DispatchMsg(SEND_MSG_IMMEDIATELY,
-												player->getID(),
-												JugadorAmbLaPilota->getID(),
-												Msg_PassToMe,
-												player);
+							player->getID(),
+							JugadorAmbLaPilota->getID(),
+							Msg_PassToMe,
+							player);
 	}
 }
 
 bool Equip::BuscaPassada(const JugadorBase *const passer, JugadorBase *&receiver,
-												 Punt3 &PassTarget, double power, double MinPassingDistance) const
+						 Punt3 &PassTarget, double power, double MinPassingDistance) const
 {
 	std::vector<JugadorBase *>::const_iterator curPlyr = Membres().begin();
 
@@ -631,7 +631,7 @@ bool Equip::BuscaPassada(const JugadorBase *const passer, JugadorBase *&receiver
 		// No s'ha de poder passar a si mateix ...
 		// I ha de ser una mica lluny perque sino no tenim cap avantatge
 		if ((*curPlyr != passer) &&
-				(VectorDistanciaSq(passer->getPosicio(), (*curPlyr)->getPosicio()) > MinPassingDistance * MinPassingDistance))
+			(VectorDistanciaSq(passer->getPosicio(), (*curPlyr)->getPosicio()) > MinPassingDistance * MinPassingDistance))
 		{
 			if (TriaMillorPassadaAlReceptor(passer, *curPlyr, Target, power))
 			{
@@ -707,12 +707,12 @@ JugadorBase *Equip::BuscaMillorAtacantDeSuport()
 //------------------------------------------------------------------------
 
 bool Equip::TriaMillorPassadaAlReceptor(const JugadorBase *const passer, const JugadorBase *const receiver,
-																				Punt3 &PassTarget, double power) const
+										Punt3 &PassTarget, double power) const
 {
 	// primer, quant de temps tardara la pilota a arribar al jugador si
 	// no es mou gens
 	double time = getCamp()->getPilota()->TempsPerRecorrerDistancia(getPilota()->getPosicio(),
-																																	receiver->getPosicio(), power);
+																	receiver->getPosicio(), power);
 	// retorna fals si la pilota no pot arribar despres del xut amb la potencia
 	if (time < 0)
 		return false;
@@ -756,7 +756,7 @@ bool Equip::TriaMillorPassadaAlReceptor(const JugadorBase *const passer, const J
 		double dist = fabs(Passes[pass].x - getPorteriaContraria()->getMig().x);
 		//
 		if ((dist < ClosestSoFar) && getCamp()->getTerrenyDeJoc()->isDins(Passes[pass]) &&
-				isPassadaLliureTotsContraris(getPilota()->getPosicio(), Passes[pass], receiver, power))
+			isPassadaLliureTotsContraris(getPilota()->getPosicio(), Passes[pass], receiver, power))
 		{
 			ClosestSoFar = dist;
 			PassTarget = Passes[pass];
@@ -773,7 +773,7 @@ bool Equip::TriaMillorPassadaAlReceptor(const JugadorBase *const passer, const J
 // força 'PassingForce' sense que sigui interceptat per cap contrari.
 //------------------------------------------------------------------------
 bool Equip::isPassadaLliureDelContrari(Punt3 from, Punt3 target, const JugadorBase *const receiver,
-																			 const JugadorBase *const opp, double PassingForce) const
+									   const JugadorBase *const opp, double PassingForce) const
 {
 	//move the opponent into local space.
 	Punt3 ToTarget = target - from;
@@ -815,11 +815,11 @@ bool Equip::isPassadaLliureDelContrari(Punt3 from, Punt3 target, const JugadorBa
 
 	// calcular quant temps tardarà la pilota en arribar
 	double TimeForBall = getCamp()->getPilota()->TempsPerRecorrerDistancia(Punt3(0.0, 0.0, 0.0),
-																																				 Punt3(LocalPosOpp.x, 0.0, 0.0),
-																																				 PassingForce);
+																		   Punt3(LocalPosOpp.x, 0.0, 0.0),
+																		   PassingForce);
 	// Amb el temps determinat, mirem la distacia que pot correr el contrari
 	double reach = opp->getVelocitatMaxima() * TimeForBall + getCamp()->getPilota()->getRadi() +
-								 opp->getRadi();
+				   opp->getRadi();
 
 	// si la distància que pot córrer l'oponent és més petita que el seu rang més el radi de la pilota
 	// i el radi de l'oponent es pot interceptar
@@ -837,7 +837,7 @@ bool Equip::isPassadaLliureDelContrari(Punt3 from, Punt3 target, const JugadorBa
 //  cert si es pot fer el passe sense que sigui interceptat
 //------------------------------------------------------------------------
 bool Equip::isPassadaLliureTotsContraris(Punt3 from, Punt3 target,
-																				 const JugadorBase *const receiver, double PassingForce) const
+										 const JugadorBase *const receiver, double PassingForce) const
 {
 	std::vector<JugadorBase *>::const_iterator opp = getContraris()->Membres().begin();
 

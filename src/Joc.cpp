@@ -79,13 +79,13 @@ Joc::Joc(void)
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_OPENGL) < 0)
 	{
 		fprintf(stderr, "Error en la inicialització de Video: %s\n",
-						SDL_GetError());
+				SDL_GetError());
 		SDL_Quit();
 	}
 
-	SDL_WM_SetIcon(SDL_LoadBMP("gol.bmp"), NULL);
+	SDL_WM_SetIcon(SDL_LoadBMP(getFullFileName("gol.bmp").c_str()), NULL);
 	// SDL_WM_SetIcon(icon, NULL);
-	SDL_WM_SetCaption("Amateur Evolution Soccer", "gol.ico");
+	SDL_WM_SetCaption("Amateur Evolution Soccer", getFullFileName("gol.ico").c_str());
 
 	atexit(SDL_Quit);
 
@@ -105,16 +105,16 @@ Joc::Joc(void)
 	if (PantallaSencera == 1)
 	{
 		FonsPantalla = SDL_SetVideoMode(ResolucioX,
-																		ResolucioY,
-																		Colors,
-																		SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_FULLSCREEN);
+										ResolucioY,
+										Colors,
+										SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_FULLSCREEN);
 	}
 	else
 	{
 		FonsPantalla = SDL_SetVideoMode(ResolucioX,
-																		ResolucioY,
-																		Colors,
-																		SDL_HWSURFACE | SDL_DOUBLEBUF);
+										ResolucioY,
+										Colors,
+										SDL_HWSURFACE | SDL_DOUBLEBUF);
 	}
 
 	if (FonsPantalla == NULL)
@@ -260,7 +260,7 @@ int Joc::PantallaJoc()
 				}
 				break;
 			} // switch tecla
-		}		// while event
+		}	 // while event
 
 		if (done == 0)
 		{
@@ -281,7 +281,7 @@ int Joc::PantallaJoc()
 			SDL_framerateDelay(&manager);
 			SDL_Flip(FonsPantalla);
 		} // if done==0
-	}		// while
+	}	 // while
 
 	// Faig neteja dels vectors perquè hem acabat la pantalla
 	return done;

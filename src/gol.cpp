@@ -29,7 +29,7 @@
 #pragma comment(lib, "SDL_image.lib")
 #pragma comment(lib, "SDL_ttf.lib")
 #pragma comment(lib, "sdlgfx.lib")
-// --- LUA --- 
+// --- LUA ---
 #pragma comment(lib, "lua50.lib")
 #endif
 

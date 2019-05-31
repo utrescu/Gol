@@ -19,14 +19,15 @@
  ***************************************************************************/
 #include "Animacio.h"
 #include "LUAManager.h"
+#include "filepath.h"
 
 #include <SDL/SDL_image.h>
 
 Animacio::Animacio()
 {
-	QuinMoviment=ESQUERRA;
-	ImatgeActual=0;
-	tempsActual=SDL_GetTicks();
+	QuinMoviment = ESQUERRA;
+	ImatgeActual = 0;
+	tempsActual = SDL_GetTicks();
 	DireccioAnimacio = 1;
 	// Per defecte les animacions són rotacions
 	RotacioImatges = true;
@@ -34,10 +35,8 @@ Animacio::Animacio()
 	AnimacioInterrupcio = true;
 }
 
-
 Animacio::~Animacio()
 {
-
 }
 
 // Carrega la animació determinada
@@ -45,7 +44,7 @@ Animacio::~Animacio()
 bool Animacio::load(char *nom, int numero)
 {
 	// Obtenir les dades del LUA
-	char quina[11]={ "AnimacioX" };
+	char quina[11] = {"AnimacioX"};
 	SDL_Rect original;
 	SDL_Rect origen;
 	int numImatges;
@@ -54,42 +53,42 @@ bool Animacio::load(char *nom, int numero)
 	LUAManager *lu = new LUAManager(nom);
 
 	// Primer carreguem imatge
-	std::string Fitxer = lu->getCadena("Imatge");
-	SDL_Surface *Imatge = IMG_Load(Fitxer.c_str());
+	std::string buf = getFullFileName(lu->getCadena("Imatge"));
+	SDL_Surface *Imatge = IMG_Load(buf.c_str());
 
-	if (Imatge==NULL)
+	if (Imatge == NULL)
 	{
 		// La imatge no existeix!!
 		SDL_Quit();
 	}
 
 	// Per obtenir els valors de la taula concreta
-	sprintf(quina, "Animacio%d",numero);
+	sprintf(quina, "Animacio%d", numero);
 
-	numImatges = lu->getTaulaNumeroint(quina,"num");
-	
+	numImatges = lu->getTaulaNumeroint(quina, "num");
+
 	// Ha de carregar totes les direccions de la mateixa animacio
 	// primer carreguem les dades de la primera i després ja els
 	// farem avançar en el bucle
-	original.x = lu->getTaulaNumeroint(quina,"x");
-	original.y = lu->getTaulaNumeroint(quina,"y");
-	original.w = lu->getTaulaNumeroint(quina,"ample");
-	original.h = lu->getTaulaNumeroint(quina,"alt");
-	espera = lu->getTaulaNumeroint(quina,"espera");
+	original.x = lu->getTaulaNumeroint(quina, "x");
+	original.y = lu->getTaulaNumeroint(quina, "y");
+	original.w = lu->getTaulaNumeroint(quina, "ample");
+	original.h = lu->getTaulaNumeroint(quina, "alt");
+	espera = lu->getTaulaNumeroint(quina, "espera");
 	// lu->getTaulaNumeroint(quina,"trencable");
 	// lu->getTaulaNumeroint(quina,"rotacio");
 
 	// Hi ha 'numimatges' per cada direcció
-	for (int it=0; it<numImatges; it++)
+	for (int it = 0; it < numImatges; it++)
 	{
 		// Sempre tindrem animacions per totes les direccions
-		for (int jt=0; jt<DIRECCIONS; jt++)
+		for (int jt = 0; jt < DIRECCIONS; jt++)
 		{
 			origen = original;
-			origen.x = original.x + it * (original.w+3);
-			origen.y = original.y + jt * (original.h+1); 
+			origen.x = original.x + it * (original.w + 3);
+			origen.y = original.y + jt * (original.h + 1);
 			// Moviments[it].AfegirImatge(k,Imatge,temp,RetardMoviment);
-			AfegirImatge(jt,Imatge,origen,espera);
+			AfegirImatge(jt, Imatge, origen, espera);
 		}
 	}
 
@@ -106,17 +105,16 @@ bool Animacio::load(char *nom, int numero)
 	el temps d'espera i el requadre d'imatge.
 	Retorna: res
 */
-void Animacio::AfegirImatge(int Direc, SDL_Surface* imatge, Uint32 Espera)
+void Animacio::AfegirImatge(int Direc, SDL_Surface *imatge, Uint32 Espera)
 {
-	Direccio[Direc].push_back(new Frames(imatge,Espera));
+	Direccio[Direc].push_back(new Frames(imatge, Espera));
 }
 // Per intentar solucionar el problema de les transparències li passem tota la imatge i la retallarà
 // el FRAME!
-void Animacio::AfegirImatge(int Direc, SDL_Surface* origen, SDL_Rect origrec, Uint32 Espera)
+void Animacio::AfegirImatge(int Direc, SDL_Surface *origen, SDL_Rect origrec, Uint32 Espera)
 {
-	Direccio[Direc].push_back(new Frames(origen,origrec,Espera));
+	Direccio[Direc].push_back(new Frames(origen, origrec, Espera));
 }
-
 
 void Animacio::setEspera(int Direc, int index, Uint32 Espera)
 {
@@ -136,10 +134,10 @@ void Animacio::Avanca(Direccions novadireccio)
 	tempsTotal = Direccio[QuinMoviment].at(ImatgeActual)->getEspera();
 	tempsNou = SDL_GetTicks() - tempsActual;
 
-	if (tempsTotal<tempsNou)
+	if (tempsTotal < tempsNou)
 	{
 		// Mirar si ha girat, i per tant hem de mostrar una altra imatge
-		if (novadireccio!=QuinMoviment) 
+		if (novadireccio != QuinMoviment)
 		{
 			CanviaDireccio(novadireccio);
 		}
@@ -147,8 +145,8 @@ void Animacio::Avanca(Direccions novadireccio)
 		{
 			// Només avançar si la velocitat no és zero
 
-			ImatgeActual=(ImatgeActual+DireccioAnimacio)%Direccio[QuinMoviment].size();
-			tempsActual=SDL_GetTicks();
+			ImatgeActual = (ImatgeActual + DireccioAnimacio) % Direccio[QuinMoviment].size();
+			tempsActual = SDL_GetTicks();
 		}
 	}
 }
@@ -160,19 +158,18 @@ void Animacio::Avanca(Direccions novadireccio)
 //
 void Animacio::CanviaDireccio(Direccions dir)
 {
-	QuinMoviment=dir;
+	QuinMoviment = dir;
 	// ImatgeActual=0;
-	tempsActual=SDL_GetTicks();
+	tempsActual = SDL_GetTicks();
 }
 
 // getImatge()
 //
 // Retorna la imatge actual segons quina sigui el moviment
-SDL_Surface* Animacio::getImatge()
+SDL_Surface *Animacio::getImatge()
 {
 	return Direccio[QuinMoviment].at(ImatgeActual)->getImatge();
 }
-
 
 // bool getFinalAnimacio()
 //
@@ -183,7 +180,7 @@ SDL_Surface* Animacio::getImatge()
 // acabi abans de canviar.
 bool Animacio::isFinalAnimacio()
 {
-	return (Direccio[QuinMoviment].size()==ImatgeActual-1 || AnimacioInterrupcio);
+	return (Direccio[QuinMoviment].size() == ImatgeActual - 1 || AnimacioInterrupcio);
 };
 
 // setEscala(float)
@@ -191,9 +188,9 @@ bool Animacio::isFinalAnimacio()
 // Es tracta d'escalar totes les imatges en el valor especificat
 void Animacio::setEscala(float escala)
 {
-	for (int j=0; j<DIRECCIONS; j++)
+	for (int j = 0; j < DIRECCIONS; j++)
 	{
-		for(int i=0; i<Direccio[QuinMoviment].size(); i++)
+		for (int i = 0; i < Direccio[QuinMoviment].size(); i++)
 		{
 			Direccio[j].at(i)->setEscala(escala);
 		}
