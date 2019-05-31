@@ -74,8 +74,8 @@ private:
 
 	//punter als jugadors de l'equip
 	std::vector<JugadorBase *> Jugadors;
-	Regio PosicionsAtacants[11];
-	Regio PosicionsDefensives[11];
+	Regio PosicionsAtacants[8];
+	Regio PosicionsDefensives[8];
 
 	// El camp
 	Pantalla *Camp;
