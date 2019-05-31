@@ -24,6 +24,7 @@
 #include "Marcador.h"
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
+#include "filepath.h"
 
 class Equip;
 class Regio;

@@ -81,8 +81,8 @@ private:
 
 public:
 	// Porteria(int Quina, double ZoomX, double ZoomY);
-	Porteria(char *nom, int Quina, double ZoomX, double ZoomY, int pPosix, int pPosiy, int pPosalt,
-					 int pPal1, int pPal2, int pPalAmple, int pGol1, int pGol2);
+	Porteria(const char *nom, int Quina, double ZoomX, double ZoomY, int pPosix, int pPosiy, int pPosalt,
+			 int pPal1, int pPal2, int pPalAmple, int pGol1, int pGol2);
 	~Porteria(void);
 	// Determina què ha passat amb el xut a porteria
 	int XutAPorteria(Pilota *b);
