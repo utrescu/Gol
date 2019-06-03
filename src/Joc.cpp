@@ -142,6 +142,7 @@ Joc::Joc(void)
 	}
 
 	delete lm;
+	lm = NULL;
 }
 
 Joc::~Joc(void)

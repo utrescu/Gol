@@ -203,6 +203,7 @@ void Jugador::Pinta(SDL_Surface *Fons)
 	SDL_Rect PosSprite = getPosicioImatge();
 	PosSprite.x -= Visio.x;
 	PosSprite.y -= Visio.y;
+
 	// Pinta la ombra
 	if (Nosaltres->getJugadorAmbLaPilota() == this)
 	{
@@ -215,8 +216,8 @@ void Jugador::Pinta(SDL_Surface *Fons)
 
 	PosSprite.y -= PosSprite.h;
 	SDL_BlitSurface(Numero, 0, Fons, &PosSprite);
-	// Pintar el tio
 
+	// Pintar el tio
 	RectJugador.y = getPosicioImatge().y - RectJugador.h * 0.8;
 	RectJugador.x = getPosicioImatge().x - (PosSprite.w - RectJugador.w) * 0.2;
 	RectJugador.x -= Visio.x;

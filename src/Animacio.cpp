@@ -94,6 +94,7 @@ bool Animacio::load(char *nom, int numero)
 
 	SDL_FreeSurface(Imatge);
 	delete lu;
+	lu=NULL;
 
 	return true;
 }

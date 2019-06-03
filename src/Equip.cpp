@@ -75,6 +75,7 @@ Equip::Equip(const char *nomfitxer, Porteria *nostra, Porteria *seva, Pantalla *
 Equip::~Equip()
 {
 	delete maquinaEstats;
+	maquinaEstats = NULL;
 	// Eliminar els jugadors de l'equip
 	std::vector<JugadorBase *>::iterator it = Jugadors.begin();
 	for (it; it != Jugadors.end(); ++it)
@@ -83,6 +84,7 @@ Equip::~Equip()
 	}
 	// Eliminar els possibles punts de suport
 	delete PuntsSuport;
+	PuntsSuport = NULL;
 }
 
 void Equip::CrearJugadors(const char *nomfitxer, double Escala)
@@ -242,6 +244,7 @@ void Equip::CrearJugadors(const char *nomfitxer, double Escala)
 	}
 
 	delete lm;
+	lm = NULL;
 }
 
 void Equip::Mou()

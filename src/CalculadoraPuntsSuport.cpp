@@ -38,6 +38,7 @@
 CalculadoraPuntsSuport::~CalculadoraPuntsSuport()
 {
 	delete m_pRegulator;
+	m_pRegulator = NULL;
 }
 
 //------------------------------- ctor ----------------------------------------

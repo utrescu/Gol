@@ -105,8 +105,10 @@ public:
 	Regio *getRegioNormal() { return RegioNormal; }
 	void setRegioNormal(Regio reg)
 	{
-		if (RegioNormal != NULL)
+		if (RegioNormal != NULL) {
 			delete RegioNormal;
+			RegioNormal = NULL;
+		}
 		RegioNormal = new Regio(0, reg);
 	}
 

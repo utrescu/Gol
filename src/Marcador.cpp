@@ -20,31 +20,53 @@
 #include "Marcador.h"
 #include "filepath.h"
 
-Marcador::Marcador(void)
-{
+Marcador::Marcador(void) {
 	// Posar els gols a zero
 	Gols[EQUIP_LOCAL] = 0;
 	Gols[EQUIP_VISITANT] = 0;
 
 	font = TTF_OpenFont(getFullFileName("start.ttf").c_str(), 36);
-	if (!font)
-	{
+	if (!font) {
 		printf("TTF_OpenFont: %s\n", TTF_GetError());
 		exit(-1);
 	}
+
+	local = CreaImatgeDelNumero("0");
+	visitant = CreaImatgeDelNumero("0");
 }
 
-Marcador::~Marcador(void)
-{
+Marcador::~Marcador(void) {
 	if (font != NULL)
 		TTF_CloseFont(font);
 	font = NULL;
+
+	if (local != NULL) {
+		SDL_FreeSurface(local);
+		local = NULL;
+	}
+
+	if (visitant != NULL) {
+		SDL_FreeSurface(visitant);
+		visitant = NULL;
+	}
 }
 
-void Marcador::HaMarcat(int costat)
-{
-	if (costat >= 0)
-		Gols[costat]++;
+void Marcador::HaMarcat(int costat) {
+
+
+	if (costat < 0)
+		return;
+
+	Gols[costat]++;
+
+	std::string s = std::to_string(Gols[costat]);
+	char const *numero = s.c_str();
+
+	if (costat == 0) {
+		local = CreaImatgeDelNumero(numero);
+	} else {
+		visitant = CreaImatgeDelNumero(numero);
+	}
 }
 
 std::string Marcador::ToString() {
@@ -54,35 +76,39 @@ std::string Marcador::ToString() {
 	return s;
 }
 
-void Marcador::Pinta(SDL_Surface *fons)
-{
-	std::string sGols;
+SDL_Surface* Marcador::CreaImatgeDelNumero(const char* gols) {
+
+	SDL_Color color = { 255, 255, 255 };
+	SDL_Surface *text_surface;
+
+	if (!(text_surface = TTF_RenderText_Solid(font, gols, color))) {
+		printf("%s -> %s\n", gols, TTF_GetError());
+		exit(-1);
+	}
+	return text_surface;
+}
+
+void Marcador::Pinta(SDL_Surface *fons) {
 	SDL_Rect dest;
-	SDL_Surface *lletres;
 
 	// Pintar els resultats;
-	SDL_Color color = {255, 255, 255};
-	// sprintf(sGols, "%d", Gols[EQUIP_LOCAL]);
-	sGols = std::to_string(Gols[EQUIP_LOCAL]);
-	lletres = TTF_RenderText_Solid(font, sGols.c_str(), color);
+	SDL_Color color = { 255, 255, 255 };
+
 	dest.x = 10;
 	dest.y = 0;
-	dest.w = lletres->h;
-	dest.h = lletres->w;
-	SDL_BlitSurface(lletres, NULL, fons, &dest);
-	SDL_FreeSurface(lletres);
-	// Les lletres del visitant
-	sGols = std::to_string(Gols[EQUIP_VISITANT]);
-	lletres = TTF_RenderText_Solid(font, sGols.c_str(), color);
-	dest.x = fons->w - lletres->w - 10;
+	dest.w = local->h;
+	dest.h = local->w;
+	SDL_BlitSurface(local, NULL, fons, &dest);
+
+	dest.x = fons->w - visitant->w - 10;
 	dest.y = 0;
-	dest.w = lletres->h;
-	dest.h = lletres->w;
-	SDL_BlitSurface(lletres, NULL, fons, &dest);
-	SDL_FreeSurface(lletres);
+	dest.w = visitant->h;
+	dest.h = visitant->w;
+	SDL_BlitSurface(visitant, NULL, fons, &dest);
+
 }
-int Marcador::Inicia(void)
-{
+
+int Marcador::Inicia(void) {
 	Gols[EQUIP_LOCAL] = 0;
 	Gols[EQUIP_VISITANT] = 0;
 	return 0;

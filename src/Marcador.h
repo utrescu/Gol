@@ -32,6 +32,10 @@ class Marcador
 private:
     int Gols[2];
     TTF_Font *font;
+    SDL_Surface* local;
+    SDL_Surface* visitant;
+
+    SDL_Surface* CreaImatgeDelNumero(const char* gols);
 
 public:
     Marcador(void);

@@ -89,6 +89,13 @@ public:
 
     inline bool isDins(Punt3 pos) const
     {
+    	// Arrodonir els valors de la posició
+    	int posx = (int)(x);
+    	int posy = (int)(y);
+    	int posh = (int)(h);
+    	int posw = (int)(w);
+
+
         return ((pos.x > x) && (pos.x < x + w) &&
                 (pos.y > y) && (pos.y < y + h));
     }
@@ -106,6 +113,12 @@ public:
 
     inline bool isFora(Punt3 pos) const
     {
+    	// Arrodonir els valors de la posició
+		int posx = (int)(x);
+		int posy = (int)(y);
+		int posh = (int)(h);
+		int posw = (int)(w);
+
         return ((pos.x < x) || (pos.x > x + w) ||
                 (pos.y < y) || (pos.y > y + h));
     }
